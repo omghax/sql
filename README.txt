@@ -16,6 +16,71 @@ Ruby library for parsing and generating SQL statements.
 
 == SYNOPSIS:
 
+Here's an example of manually building an AST. It's extremely verbose at the
+moment, but that should be mitigated a bit when I come up with a DSL for
+building these trees.
+
+  >> require 'rubygems'
+  >> require 'sql'
+
+  # Let's build a tree representing the SQL statement
+  # "SELECT * FROM users WHERE id = 1"
+  # We'll start from the rightmost side, and work our way left as we go.
+
+  # First, the integer constant, "1"
+  >> integer_constant = SQL::Statement::Integer.new(1)
+  >> integer_constant.to_sql
+  => "1"
+
+  # Now the column reference, "id"
+  >> column_reference = SQL::Statement::Column.new('id')
+  >> column_reference.to_sql
+  => "id"
+
+  # Now we'll combine the two using an equals operator, to create a search
+  # condition
+  >> search_condition = SQL::Statement::Equals.new(column_reference, integer_constant)
+  >> search_condition.to_sql
+  => "id = 1"
+
+  # Next we'll feed that search condition to a where clause
+  >> where_clause = SQL::Statement::WhereClause.new(search_condition)
+  >> where_clause.to_sql
+  => "WHERE id = 1"
+
+  # Next up is the FROM clause.  First we'll build a table reference
+  >> users = SQL::Statement::Table.new('users')
+  >> users.to_sql
+  => "users"
+
+  # Now we'll feed that table reference to a from clause
+  >> from_clause = SQL::Statement::FromClause.new(users)
+  >> from_clause.to_sql
+  => "FROM users"
+
+  # Now to combine the FROM and WHERE clauses to form a table expression
+  >> table_expression = SQL::Statement::TableExpression.new(from_clause, where_clause)
+  >> table_expression.to_sql
+  => "FROM users WHERE id = 1"
+
+  # Now we need to represent the asterisk "*"
+  >> all = SQL::Statement::All.new
+  >> all.to_sql
+  => "*"
+
+  # Now we're ready to hand off these objects to a select statement
+  >> select_statement = SQL::Statement::Select.new(all, table_expression)
+  >> select_statement.to_sql
+  => "SELECT * FROM users WHERE id = 1"
+
+== ROADMAP
+
+These features aren't currently implemented, but I have plans to add them in
+the future. Stay tuned.
+
+Eventually I plan to implement a SQL parser that will generate the tree
+structure for you, based on an input string of SQL.
+
   >> require 'rubygems'
   >> require 'sql'
   >> parser = SQL::Parser.new
