@@ -97,6 +97,10 @@ module SQL
       comparison('<', o)
     end
 
+    def visit_NotEquals(o)
+      comparison('<>', o)
+    end
+
     def visit_Equals(o)
       comparison('=', o)
     end

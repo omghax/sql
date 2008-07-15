@@ -86,6 +86,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql '1 < 1', SQL::Statement::Less.new(SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(1))
   end
 
+  def test_not_equals
+    assert_sql '1 <> 1', SQL::Statement::NotEquals.new(SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(1))
+  end
+
   def test_equals
     assert_sql '1 = 1', SQL::Statement::Equals.new(SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(1))
   end

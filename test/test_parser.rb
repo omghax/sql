@@ -2,6 +2,35 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_gte
+    assert_understands 'SELECT * FROM users WHERE id >= 1'
+  end
+
+  def test_lte
+    assert_understands 'SELECT * FROM users WHERE id <= 1'
+  end
+
+  def test_gt
+    assert_understands 'SELECT * FROM users WHERE id > 1'
+  end
+
+  def test_lt
+    assert_understands 'SELECT * FROM users WHERE id < 1'
+  end
+
+  def test_not_equals
+    assert_sql 'SELECT * FROM users WHERE id <> 1', 'SELECT * FROM users WHERE id != 1'
+    assert_understands 'SELECT * FROM users WHERE id <> 1'
+  end
+
+  def test_equals
+    assert_understands 'SELECT * FROM users WHERE id = 1'
+  end
+
+  def test_where_clause
+    assert_understands 'SELECT * FROM users WHERE 1 = 1'
+  end
+
   def test_from_clause
     assert_understands 'SELECT 1 FROM users'
     assert_understands 'SELECT id FROM users'

@@ -32,8 +32,17 @@ rule
             DATE        { [:DATE, text] }
             AS          { [:AS, text] }
             FROM        { [:FROM, text] }
+            WHERE       { [:WHERE, text] }
 
 # tokens
+            <>          { [:not_equals_operator, text] }
+            !=          { [:not_equals_operator, text] }
+            =           { [:equals_operator, text] }
+            <=          { [:less_than_or_equals_operator, text] }
+            <           { [:less_than_operator, text] }
+            >=          { [:greater_than_or_equals_operator, text] }
+            >           { [:greater_than_operator, text] }
+
             \(          { [:left_paren, text] }
             \)          { [:right_paren, text] }
             \*          { [:asterisk, text] }

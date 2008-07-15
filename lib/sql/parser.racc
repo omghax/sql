@@ -20,7 +20,8 @@ rule
     | value_expression
 
   table_expression:
-    from_clause
+    from_clause where_clause { result = SQL::Statement::TableExpression.new(val[0], val[1]) }
+    | from_clause { result = SQL::Statement::TableExpression.new(val[0]) }
 
   from_clause:
     FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
@@ -28,11 +29,31 @@ rule
   table_reference:
     table_name { result = SQL::Statement::Table.new(val[0]) }
 
+  where_clause:
+    WHERE search_condition { result = SQL::Statement::WhereClause.new(val[1]) }
+
+# query expression components
+  comp_op:
+    equals_operator { result = SQL::Statement::Equals }
+    | not_equals_operator { result = SQL::Statement::NotEquals }
+    | less_than_operator { result = SQL::Statement::Less }
+    | greater_than_operator { result = SQL::Statement::Greater }
+    | less_than_or_equals_operator { result = SQL::Statement::LessOrEquals }
+    | greater_than_or_equals_operator { result = SQL::Statement::GreaterOrEquals }
+
 # constraints
   table_name:
     identifier
 
 # search condition
+  search_condition:
+    # FIXME: shortcut
+    comparison_predicate
+
+  comparison_predicate:
+    # FIXME: shortcut
+    value_expression comp_op value_expression { result = val[1].new(val[0], val[2]) }
+
   value_expression:
     numeric_value_expression
 

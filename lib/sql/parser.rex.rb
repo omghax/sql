@@ -83,6 +83,30 @@ class Parser < Racc::Parser
         when (text = ss.scan(/FROM/))
            @rex_tokens.push action { [:FROM, text] }
 
+        when (text = ss.scan(/WHERE/))
+           @rex_tokens.push action { [:WHERE, text] }
+
+        when (text = ss.scan(/<>/))
+           @rex_tokens.push action { [:not_equals_operator, text] }
+
+        when (text = ss.scan(/!=/))
+           @rex_tokens.push action { [:not_equals_operator, text] }
+
+        when (text = ss.scan(/=/))
+           @rex_tokens.push action { [:equals_operator, text] }
+
+        when (text = ss.scan(/<=/))
+           @rex_tokens.push action { [:less_than_or_equals_operator, text] }
+
+        when (text = ss.scan(/</))
+           @rex_tokens.push action { [:less_than_operator, text] }
+
+        when (text = ss.scan(/>=/))
+           @rex_tokens.push action { [:greater_than_or_equals_operator, text] }
+
+        when (text = ss.scan(/>/))
+           @rex_tokens.push action { [:greater_than_operator, text] }
+
         when (text = ss.scan(/\(/))
            @rex_tokens.push action { [:left_paren, text] }
 
