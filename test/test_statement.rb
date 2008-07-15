@@ -101,6 +101,14 @@ class TestStatement < Test::Unit::TestCase
     assert_sql 'id', SQL::Statement::Column.new('id')
   end
 
+  def test_unary_plus
+    assert_sql '+1', SQL::Statement::UnaryPlus.new(SQL::Statement::Integer.new(1))
+  end
+
+  def test_unary_minus
+    assert_sql '-1', SQL::Statement::UnaryMinus.new(SQL::Statement::Integer.new(1))
+  end
+
   def test_true
     assert_sql 'TRUE', SQL::Statement::True.new
   end

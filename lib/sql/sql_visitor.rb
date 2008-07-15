@@ -113,6 +113,14 @@ module SQL
       o.name
     end
 
+    def visit_UnaryPlus(o)
+      "+#{visit(o.value)}"
+    end
+
+    def visit_UnaryMinus(o)
+      "-#{visit(o.value)}"
+    end
+
     def visit_True(o)
       'TRUE'
     end
@@ -148,7 +156,10 @@ module SQL
     private
 
     def quote(str)
-      str.gsub("'", "\\\'")
+      str
+
+      # # FIXME
+      # str.gsub("'", "\\\'")
     end
 
     def comparison(operator, o)

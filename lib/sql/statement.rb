@@ -216,6 +216,20 @@ module SQL
       attr_reader :name
     end
 
+    class Unary < Node
+      def initialize(value)
+        @value = value
+      end
+
+      attr_reader :value
+    end
+
+    class UnaryPlus < Unary
+    end
+
+    class UnaryMinus < Unary
+    end
+
     class True < Node
     end
 

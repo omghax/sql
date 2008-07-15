@@ -1,0 +1,23 @@
+class SQL::Parser
+
+rule
+  literal:
+    signed_numeric_literal
+    | general_literal
+
+  general_literal:
+    character_string_literal { result = SQL::Statement::String.new(val[0]) }
+
+  signed_numeric_literal:
+    plus_sign exact_numeric_literal { result = SQL::Statement::UnaryPlus.new(val[1]) }
+    | minus_sign exact_numeric_literal { result = SQL::Statement::UnaryMinus.new(val[1]) }
+    | exact_numeric_literal
+
+  exact_numeric_literal:
+    unsigned_integer period unsigned_integer { result = SQL::Statement::Float.new("#{val[0]}.#{val[2]}".to_f) }
+    | unsigned_integer period { result = SQL::Statement::Float.new(val[0]) }
+    | period unsigned_integer { result = SQL::Statement::Float.new("0.#{val[1]}".to_f) }
+    | unsigned_integer { result = SQL::Statement::Integer.new(val[0]) }
+
+---- header ----
+require File.dirname(__FILE__) + '/parser.rex.rb'
