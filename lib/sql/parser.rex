@@ -31,6 +31,7 @@ rule
             SELECT      { [:SELECT, text] }
             DATE        { [:DATE, text] }
             AS          { [:AS, text] }
+            FROM        { [:FROM, text] }
 
 # tokens
             \(          { [:left_paren, text] }

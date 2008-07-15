@@ -4,10 +4,12 @@ rule
 
 # queries
   query_specification:
-    SELECT select_list { result = SQL::Statement::Select.new(val[1]) }
+    SELECT select_list table_expression { result = SQL::Statement::Select.new(val[1], val[2]) }
+    | SELECT select_list { result = SQL::Statement::Select.new(val[1]) }
 
   select_list:
-    select_sublist { result = SQL::Statement::SelectList.new(val[0]) }
+    asterisk { result = SQL::Statement::All.new }
+    | select_sublist { result = SQL::Statement::SelectList.new(val[0]) }
 
   select_sublist:
     derived_column comma select_sublist { result = [val[0]] + Array(val[2]) }
@@ -16,6 +18,19 @@ rule
   derived_column:
     value_expression AS column_name { result = SQL::Statement::As.new(val[0], val[2]) }
     | value_expression
+
+  table_expression:
+    from_clause
+
+  from_clause:
+    FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
+
+  table_reference:
+    table_name { result = SQL::Statement::Table.new(val[0]) }
+
+# constraints
+  table_name:
+    identifier
 
 # search condition
   value_expression:

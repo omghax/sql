@@ -80,6 +80,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/AS/))
            @rex_tokens.push action { [:AS, text] }
 
+        when (text = ss.scan(/FROM/))
+           @rex_tokens.push action { [:FROM, text] }
+
         when (text = ss.scan(/\(/))
            @rex_tokens.push action { [:left_paren, text] }
 

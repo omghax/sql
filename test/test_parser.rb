@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_select_all
+    assert_understands 'SELECT * FROM users'
+  end
+
+  def test_from_clause
+    assert_understands 'SELECT 1 FROM users'
+  end
+
   def test_select_list
     assert_understands 'SELECT 1, 2'
     assert_understands 'SELECT (1 + 1) AS x, (2 + 2) AS y'
