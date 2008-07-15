@@ -53,6 +53,12 @@ class Parser < Racc::Parser
       case state
       when nil
         case
+        when (text = ss.scan(/\"[0-9]+-[0-9]+-[0-9]+\"/))
+           @rex_tokens.push action { [:date_string, Date.parse(text)] }
+
+        when (text = ss.scan(/\'[0-9]+-[0-9]+-[0-9]+\'/))
+           @rex_tokens.push action { [:date_string, Date.parse(text)] }
+
         when (text = ss.scan(/\"[^"]*\"/))
            @rex_tokens.push action { [:character_string_literal, text[1..-2]] }
 
@@ -65,6 +71,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/\s+/))
           ;
 
+        when (text = ss.scan(/DATE/))
+           @rex_tokens.push action { [:DATE, text] }
+
         when (text = ss.scan(/\+/))
            @rex_tokens.push action { [:plus_sign, text] }
 
@@ -73,6 +82,12 @@ class Parser < Racc::Parser
 
         when (text = ss.scan(/\./))
            @rex_tokens.push action { [:period, text] }
+
+        when (text = ss.scan(/----/))
+          ;
+
+        when (text = ss.scan(/require/))
+          ;
 
         else
           text = ss.string[ss.pos .. -1]

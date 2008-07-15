@@ -7,6 +7,13 @@ rule
 
   general_literal:
     character_string_literal { result = SQL::Statement::String.new(val[0]) }
+    | datetime_literal
+
+  datetime_literal:
+    date_literal
+
+  date_literal:
+    DATE date_string { result = SQL::Statement::Date.new(val[1]) }
 
   signed_numeric_literal:
     plus_sign exact_numeric_literal { result = SQL::Statement::UnaryPlus.new(val[1]) }

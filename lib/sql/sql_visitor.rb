@@ -138,7 +138,7 @@ module SQL
     end
 
     def visit_Date(o)
-      "'%s'" % quote(o.value.strftime('%Y-%m-%d'))
+      "DATE '%s'" % quote(o.value.strftime('%Y-%m-%d'))
     end
 
     def visit_String(o)

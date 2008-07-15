@@ -7,6 +7,11 @@ class TestParser < Test::Unit::TestCase
     @parser = SQL::Parser.new
   end
 
+  def test_date
+    assert_sql "DATE '2008-07-11'", 'DATE "2008-07-11"'
+    assert_understands "DATE '2008-07-11'"
+  end
+
   def test_string
     assert_sql "'abc'", '"abc"'
     assert_understands "'abc'"

@@ -126,7 +126,7 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_date
-    assert_sql "'2008-07-01'", SQL::Statement::Date.new(Date.new(2008, 7, 1))
+    assert_sql "DATE '2008-07-01'", SQL::Statement::Date.new(Date.new(2008, 7, 1))
   end
 
   def test_string
