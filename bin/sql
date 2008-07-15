@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby -wKU
+require File.dirname(__FILE__) + '/../lib/sql'
+require 'readline'
+
+PARSER = SQL::Parser.new
+EXIT_VERBS = [nil, 'exit', 'quit']
+
+def handle_exit(input)
+  if EXIT_VERBS.include?(input)
+    puts if input.nil?
+    exit
+  end
+end
+
+def eval_sql(expression)
+  puts "=> #{PARSER.scan_str(expression).to_sql}"
+rescue Exception => e
+  puts e.message
+  puts e.backtrace.reject { |l| l =~ /bin\/sql/ }
+end
+
+loop do
+  input = Readline.readline('sql> ', true)
+  handle_exit(input)
+  eval_sql(input)
+end
