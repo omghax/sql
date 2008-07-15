@@ -3,133 +3,133 @@ class SQL::Parser
 rule
 
 # queries
-  query_specification:
-    SELECT select_list table_expression { result = SQL::Statement::Select.new(val[1], val[2]) }
+  query_specification
+    : SELECT select_list table_expression { result = SQL::Statement::Select.new(val[1], val[2]) }
     | SELECT select_list { result = SQL::Statement::Select.new(val[1]) }
 
-  select_list:
-    asterisk { result = SQL::Statement::All.new }
+  select_list
+    : asterisk { result = SQL::Statement::All.new }
     | select_sublist { result = SQL::Statement::SelectList.new(val[0]) }
 
-  select_sublist:
-    derived_column comma select_sublist { result = [val[0]] + Array(val[2]) }
+  select_sublist
+    : derived_column comma select_sublist { result = [val[0]] + Array(val[2]) }
     | derived_column
 
-  derived_column:
-    value_expression AS column_name { result = SQL::Statement::As.new(val[0], val[2]) }
+  derived_column
+    : value_expression AS column_name { result = SQL::Statement::As.new(val[0], val[2]) }
     | value_expression
 
-  table_expression:
-    from_clause where_clause { result = SQL::Statement::TableExpression.new(val[0], val[1]) }
+  table_expression
+    : from_clause where_clause { result = SQL::Statement::TableExpression.new(val[0], val[1]) }
     | from_clause { result = SQL::Statement::TableExpression.new(val[0]) }
 
-  from_clause:
-    FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
+  from_clause
+    : FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
 
-  table_reference:
-    table_name { result = SQL::Statement::Table.new(val[0]) }
+  table_reference
+    : table_name { result = SQL::Statement::Table.new(val[0]) }
 
-  where_clause:
-    WHERE search_condition { result = SQL::Statement::WhereClause.new(val[1]) }
+  where_clause
+    : WHERE search_condition { result = SQL::Statement::WhereClause.new(val[1]) }
 
 # query expression components
-  comp_op:
-    equals_operator { result = SQL::Statement::Equals }
+  comp_op
+    : equals_operator { result = SQL::Statement::Equals }
     | not_equals_operator { result = SQL::Statement::NotEquals }
     | less_than_operator { result = SQL::Statement::Less }
     | greater_than_operator { result = SQL::Statement::Greater }
     | less_than_or_equals_operator { result = SQL::Statement::LessOrEquals }
     | greater_than_or_equals_operator { result = SQL::Statement::GreaterOrEquals }
 
-  between_predicate:
-    row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::NotBetween.new(val[0], val[3], val[5]) }
+  between_predicate
+    : row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::NotBetween.new(val[0], val[3], val[5]) }
     | row_value_constructor BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Between.new(val[0], val[2], val[4]) }
 
-  in_predicate:
-    row_value_constructor NOT IN in_predicate_value { result = SQL::Statement::NotIn.new(val[0], val[3]) }
+  in_predicate
+    : row_value_constructor NOT IN in_predicate_value { result = SQL::Statement::NotIn.new(val[0], val[3]) }
     | row_value_constructor IN in_predicate_value { result = SQL::Statement::In.new(val[0], val[2]) }
 
-  in_predicate_value:
-    left_paren in_value_list right_paren { result = val[1] }
+  in_predicate_value
+    : left_paren in_value_list right_paren { result = val[1] }
 
-  in_value_list:
-    value_expression comma in_value_list { result = [val[0]] + Array(val[2]) }
+  in_value_list
+    : value_expression comma in_value_list { result = [val[0]] + Array(val[2]) }
     | value_expression
 
 # constraints
-  table_name:
-    identifier
+  table_name
+    : identifier
 
 # search condition
-  search_condition:
+  search_condition
     # FIXME: shortcut
-    predicate
+    : predicate
 
-  predicate:
-    comparison_predicate
+  predicate
+    : comparison_predicate
     | between_predicate
     | in_predicate
 
-  comparison_predicate:
+  comparison_predicate
     # FIXME: shortcut
-    row_value_constructor comp_op row_value_constructor { result = val[1].new(val[0], val[2]) }
+    : row_value_constructor comp_op row_value_constructor { result = val[1].new(val[0], val[2]) }
 
-  row_value_constructor:
-    row_value_constructor_element
+  row_value_constructor
+    : row_value_constructor_element
 
-  row_value_constructor_element:
-    value_expression
+  row_value_constructor_element
+    : value_expression
 
-  value_expression:
-    numeric_value_expression
+  value_expression
+    : numeric_value_expression
 
-  numeric_value_expression:
-    term plus_sign numeric_value_expression { result = SQL::Statement::Add.new(val[0], val[2]) }
+  numeric_value_expression
+    : term plus_sign numeric_value_expression { result = SQL::Statement::Add.new(val[0], val[2]) }
     | term minus_sign numeric_value_expression { result = SQL::Statement::Subtract.new(val[0], val[2]) }
     | term
 
-  term:
-    factor asterisk term { result = SQL::Statement::Multiply.new(val[0], val[2]) }
+  term
+    : factor asterisk term { result = SQL::Statement::Multiply.new(val[0], val[2]) }
     | factor solidus term { result = SQL::Statement::Divide.new(val[0], val[2]) }
     | factor
 
-  factor:
-    plus_sign value_expression_primary { result = SQL::Statement::UnaryPlus.new(val[1]) }
+  factor
+    : plus_sign value_expression_primary { result = SQL::Statement::UnaryPlus.new(val[1]) }
     | minus_sign value_expression_primary { result = SQL::Statement::UnaryMinus.new(val[1]) }
     | value_expression_primary
 
-  value_expression_primary:
-    unsigned_literal
+  value_expression_primary
+    : unsigned_literal
     | column_reference
     | left_paren value_expression right_paren { result = val[1] }
 
-  unsigned_literal:
-    unsigned_numeric_literal
+  unsigned_literal
+    : unsigned_numeric_literal
     | general_literal
 
-  column_reference:
-    column_name { result = SQL::Statement::Column.new(val[0]) }
+  column_reference
+    : column_name { result = SQL::Statement::Column.new(val[0]) }
 
 # sql module
-  column_name:
-    identifier
+  column_name
+    : identifier
 
 # literals
-  general_literal:
-    character_string_literal { result = SQL::Statement::String.new(val[0]) }
+  general_literal
+    : character_string_literal { result = SQL::Statement::String.new(val[0]) }
     | datetime_literal
 
-  datetime_literal:
-    date_literal
+  datetime_literal
+    : date_literal
 
-  date_literal:
-    DATE date_string { result = SQL::Statement::Date.new(val[1]) }
+  date_literal
+    : DATE date_string { result = SQL::Statement::Date.new(val[1]) }
 
-  unsigned_numeric_literal:
-    exact_numeric_literal
+  unsigned_numeric_literal
+    : exact_numeric_literal
 
-  exact_numeric_literal:
-    unsigned_integer period unsigned_integer { result = SQL::Statement::Float.new("#{val[0]}.#{val[2]}".to_f) }
+  exact_numeric_literal
+    : unsigned_integer period unsigned_integer { result = SQL::Statement::Float.new("#{val[0]}.#{val[2]}".to_f) }
     | unsigned_integer period { result = SQL::Statement::Float.new(val[0]) }
     | period unsigned_integer { result = SQL::Statement::Float.new("0.#{val[1]}".to_f) }
     | unsigned_integer { result = SQL::Statement::Integer.new(val[0]) }
