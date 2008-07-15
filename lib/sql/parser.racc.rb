@@ -9,9 +9,17 @@ require 'racc/parser'
 
 require File.dirname(__FILE__) + '/parser.rex.rb'
 
+
 module SQL
 
   class Parser < Racc::Parser
+
+module_eval <<'..end lib/sql/parser.racc modeval..idb343d81e21', 'lib/sql/parser.racc', 63
+
+def self.parse(sql)
+  new.scan_str(sql)
+end
+..end lib/sql/parser.racc modeval..idb343d81e21
 
 ##### racc 1.4.5 generates ###
 

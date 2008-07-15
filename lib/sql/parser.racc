@@ -58,3 +58,9 @@ rule
 
 ---- header ----
 require File.dirname(__FILE__) + '/parser.rex.rb'
+
+---- inner ----
+
+def self.parse(sql)
+  new.scan_str(sql)
+end
