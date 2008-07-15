@@ -33,6 +33,9 @@ rule
             AS          { [:AS, text] }
             FROM        { [:FROM, text] }
             WHERE       { [:WHERE, text] }
+            BETWEEN     { [:BETWEEN, text] }
+            AND         { [:AND, text] }
+            NOT         { [:NOT, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

@@ -66,6 +66,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql '1 IN (1, 2, 3)', SQL::Statement::In.new(SQL::Statement::Integer.new(1), [SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(3)])
   end
 
+  def test_not_between
+    assert_sql '2 NOT BETWEEN 1 AND 3', SQL::Statement::NotBetween.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(3))
+  end
+
   def test_between
     assert_sql '2 BETWEEN 1 AND 3', SQL::Statement::Between.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(3))
   end

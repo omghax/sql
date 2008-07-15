@@ -86,6 +86,15 @@ class Parser < Racc::Parser
         when (text = ss.scan(/WHERE/))
            @rex_tokens.push action { [:WHERE, text] }
 
+        when (text = ss.scan(/BETWEEN/))
+           @rex_tokens.push action { [:BETWEEN, text] }
+
+        when (text = ss.scan(/AND/))
+           @rex_tokens.push action { [:AND, text] }
+
+        when (text = ss.scan(/NOT/))
+           @rex_tokens.push action { [:NOT, text] }
+
         when (text = ss.scan(/<>/))
            @rex_tokens.push action { [:not_equals_operator, text] }
 

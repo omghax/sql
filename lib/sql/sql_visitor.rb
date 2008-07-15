@@ -77,6 +77,10 @@ module SQL
       "#{visit(o.left)} IN (#{arrayize(o.right)})"
     end
 
+    def visit_NotBetween(o)
+      "#{visit(o.left)} NOT BETWEEN #{visit(o.min)} AND #{visit(o.max)}"
+    end
+
     def visit_Between(o)
       "#{visit(o.left)} BETWEEN #{visit(o.min)} AND #{visit(o.max)}"
     end

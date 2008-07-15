@@ -163,6 +163,18 @@ module SQL
     class In < ComparisonPredicate
     end
 
+    class NotBetween < Node
+      def initialize(left, min, max)
+        @left = left
+        @min = min
+        @max = max
+      end
+
+      attr_reader :left
+      attr_reader :min
+      attr_reader :max
+    end
+
     class Between < Node
       def initialize(left, min, max)
         @left = left

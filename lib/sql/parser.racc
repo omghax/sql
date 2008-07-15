@@ -41,6 +41,10 @@ rule
     | less_than_or_equals_operator { result = SQL::Statement::LessOrEquals }
     | greater_than_or_equals_operator { result = SQL::Statement::GreaterOrEquals }
 
+  between_predicate:
+    row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::NotBetween.new(val[0], val[3], val[5]) }
+    | row_value_constructor BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Between.new(val[0], val[2], val[4]) }
+
 # constraints
   table_name:
     identifier
@@ -48,11 +52,21 @@ rule
 # search condition
   search_condition:
     # FIXME: shortcut
+    predicate
+
+  predicate:
     comparison_predicate
+    | between_predicate
 
   comparison_predicate:
     # FIXME: shortcut
-    value_expression comp_op value_expression { result = val[1].new(val[0], val[2]) }
+    row_value_constructor comp_op row_value_constructor { result = val[1].new(val[0], val[2]) }
+
+  row_value_constructor:
+    row_value_constructor_element
+
+  row_value_constructor_element:
+    value_expression
 
   value_expression:
     numeric_value_expression

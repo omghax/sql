@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_not_between
+    assert_understands 'SELECT * FROM users WHERE id NOT BETWEEN 1 AND 3'
+  end
+
+  def test_between
+    assert_understands 'SELECT * FROM users WHERE id BETWEEN 1 AND 3'
+  end
+
   def test_gte
     assert_understands 'SELECT * FROM users WHERE id >= 1'
   end
