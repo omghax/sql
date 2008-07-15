@@ -7,11 +7,19 @@ class TestParser < Test::Unit::TestCase
     @parser = SQL::Parser.new
   end
 
+  def test_parentheses
+    assert_sql 'SELECT ((1 + 2) * ((3 - 4) / 5))', 'SELECT (1 + 2) * (3 - 4) / 5'
+  end
+
+  def test_order_of_operations
+    assert_sql 'SELECT (1 + ((2 * 3) - (4 / 5)))', 'SELECT 1 + 2 * 3 - 4 / 5'
+  end
+
   def test_numeric_value_expression
-    assert_understands 'SELECT 1 * 2'
-    assert_understands 'SELECT 1 / 2'
-    assert_understands 'SELECT 1 + 2'
-    assert_understands 'SELECT 1 - 2'
+    assert_understands 'SELECT (1 * 2)'
+    assert_understands 'SELECT (1 / 2)'
+    assert_understands 'SELECT (1 + 2)'
+    assert_understands 'SELECT (1 - 2)'
   end
 
   def test_date

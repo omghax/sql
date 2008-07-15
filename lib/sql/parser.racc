@@ -24,14 +24,19 @@ rule
     | factor
 
   factor:
-    # NOTE: shortcut.  this is wrong.
-    literal
+    plus_sign value_expression_primary { result = SQL::Statement::UnaryPlus.new(val[1]) }
+    | minus_sign value_expression_primary { result = SQL::Statement::UnaryMinus.new(val[1]) }
+    | value_expression_primary
 
-# literals
-  literal:
-    signed_numeric_literal
+  value_expression_primary:
+    unsigned_literal
+    | left_paren value_expression right_paren { result = val[1] }
+
+  unsigned_literal:
+    unsigned_numeric_literal
     | general_literal
 
+# literals
   general_literal:
     character_string_literal { result = SQL::Statement::String.new(val[0]) }
     | datetime_literal
@@ -42,10 +47,8 @@ rule
   date_literal:
     DATE date_string { result = SQL::Statement::Date.new(val[1]) }
 
-  signed_numeric_literal:
-    plus_sign exact_numeric_literal { result = SQL::Statement::UnaryPlus.new(val[1]) }
-    | minus_sign exact_numeric_literal { result = SQL::Statement::UnaryMinus.new(val[1]) }
-    | exact_numeric_literal
+  unsigned_numeric_literal:
+    exact_numeric_literal
 
   exact_numeric_literal:
     unsigned_integer period unsigned_integer { result = SQL::Statement::Float.new("#{val[0]}.#{val[2]}".to_f) }

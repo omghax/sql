@@ -179,7 +179,7 @@ module SQL
     end
 
     def arithmetic(operator, o)
-      [visit(o.left), operator, visit(o.right)].join(' ')
+      search_condition(operator, o)
     end
 
     def comparison(operator, o)

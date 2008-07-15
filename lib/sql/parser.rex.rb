@@ -77,6 +77,12 @@ class Parser < Racc::Parser
         when (text = ss.scan(/DATE/))
            @rex_tokens.push action { [:DATE, text] }
 
+        when (text = ss.scan(/\(/))
+           @rex_tokens.push action { [:left_paren, text] }
+
+        when (text = ss.scan(/\)/))
+           @rex_tokens.push action { [:right_paren, text] }
+
         when (text = ss.scan(/\*/))
            @rex_tokens.push action { [:asterisk, text] }
 

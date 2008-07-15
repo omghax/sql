@@ -30,6 +30,8 @@ rule
             DATE        { [:DATE, text] }
 
 # tokens
+            \(          { [:left_paren, text] }
+            \)          { [:right_paren, text] }
             \*          { [:asterisk, text] }
             \/          { [:solidus, text] }
             \+          { [:plus_sign, text] }
