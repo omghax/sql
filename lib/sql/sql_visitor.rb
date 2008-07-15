@@ -73,6 +73,10 @@ module SQL
       comparison('LIKE', o)
     end
 
+    def visit_NotIn(o)
+      "#{visit(o.left)} NOT IN (#{arrayize(o.right)})"
+    end
+
     def visit_In(o)
       "#{visit(o.left)} IN (#{arrayize(o.right)})"
     end

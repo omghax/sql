@@ -62,6 +62,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql "'hello' LIKE 'h%'", SQL::Statement::Like.new(SQL::Statement::String.new('hello'), SQL::Statement::String.new('h%'))
   end
 
+  def test_not_in
+    assert_sql '1 NOT IN (1, 2, 3)', SQL::Statement::NotIn.new(SQL::Statement::Integer.new(1), [SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(3)])
+  end
+
   def test_in
     assert_sql '1 IN (1, 2, 3)', SQL::Statement::In.new(SQL::Statement::Integer.new(1), [SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(3)])
   end

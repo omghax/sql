@@ -36,6 +36,7 @@ rule
             BETWEEN     { [:BETWEEN, text] }
             AND         { [:AND, text] }
             NOT         { [:NOT, text] }
+            IN          { [:IN, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

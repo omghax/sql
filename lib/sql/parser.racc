@@ -45,6 +45,17 @@ rule
     row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::NotBetween.new(val[0], val[3], val[5]) }
     | row_value_constructor BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Between.new(val[0], val[2], val[4]) }
 
+  in_predicate:
+    row_value_constructor NOT IN in_predicate_value { result = SQL::Statement::NotIn.new(val[0], val[3]) }
+    | row_value_constructor IN in_predicate_value { result = SQL::Statement::In.new(val[0], val[2]) }
+
+  in_predicate_value:
+    left_paren in_value_list right_paren { result = val[1] }
+
+  in_value_list:
+    value_expression comma in_value_list { result = [val[0]] + Array(val[2]) }
+    | value_expression
+
 # constraints
   table_name:
     identifier
@@ -57,6 +68,7 @@ rule
   predicate:
     comparison_predicate
     | between_predicate
+    | in_predicate
 
   comparison_predicate:
     # FIXME: shortcut

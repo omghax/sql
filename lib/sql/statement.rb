@@ -160,6 +160,9 @@ module SQL
     class Like < ComparisonPredicate
     end
 
+    class NotIn < ComparisonPredicate
+    end
+
     class In < ComparisonPredicate
     end
 
