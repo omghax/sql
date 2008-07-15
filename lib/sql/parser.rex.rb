@@ -101,6 +101,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/\./))
            @rex_tokens.push action { [:period, text] }
 
+        when (text = ss.scan(/,/))
+           @rex_tokens.push action { [:comma, text] }
+
         when (text = ss.scan(/\w+/))
            @rex_tokens.push action { [:identifier, text] }
 

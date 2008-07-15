@@ -4,7 +4,14 @@ rule
 
 # queries
   query_specification:
-    SELECT derived_column { result = SQL::Statement::Select.new(val[1]) }
+    SELECT select_list { result = SQL::Statement::Select.new(val[1]) }
+
+  select_list:
+    select_sublist { result = SQL::Statement::SelectList.new(val[0]) }
+
+  select_sublist:
+    derived_column comma select_sublist { result = [val[0]] + Array(val[2]) }
+    | derived_column
 
   derived_column:
     value_expression AS column_name { result = SQL::Statement::As.new(val[0], val[2]) }

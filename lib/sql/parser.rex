@@ -40,6 +40,7 @@ rule
             \+          { [:plus_sign, text] }
             \-          { [:minus_sign, text] }
             \.          { [:period, text] }
+            ,           { [:comma, text] }
 
 # identifier
             {IDENT}     { [:identifier, text] }
