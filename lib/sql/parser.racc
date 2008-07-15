@@ -53,11 +53,15 @@ rule
 
   value_expression_primary:
     unsigned_literal
+    | column_reference
     | left_paren value_expression right_paren { result = val[1] }
 
   unsigned_literal:
     unsigned_numeric_literal
     | general_literal
+
+  column_reference:
+    column_name { result = SQL::Statement::Column.new(val[0]) }
 
 # sql module
   column_name:
