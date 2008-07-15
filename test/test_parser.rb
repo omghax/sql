@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_or
+    assert_understands 'SELECT * FROM users WHERE (id = 1 OR age = 18)'
+  end
+
+  def test_and
+    assert_understands 'SELECT * FROM users WHERE (id = 1 AND age = 18)'
+  end
+
   def test_not_in
     assert_understands 'SELECT * FROM users WHERE id NOT IN (1, 2, 3)'
   end

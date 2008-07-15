@@ -62,8 +62,20 @@ rule
 
 # search condition
   search_condition
+    : boolean_term
+    | search_condition OR boolean_term { result = SQL::Statement::Or.new(val[0], val[2]) }
+
+  boolean_term
+    : boolean_factor
+    | boolean_term AND boolean_factor { result = SQL::Statement::And.new(val[0], val[2]) }
+
+  boolean_factor:
     # FIXME: shortcut
+    boolean_primary
+
+  boolean_primary
     : predicate
+    | left_paren search_condition right_paren { result = val[1] }
 
   predicate
     : comparison_predicate
