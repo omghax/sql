@@ -1,12 +1,7 @@
 require File.dirname(__FILE__) + '/../lib/sql'
-require File.dirname(__FILE__) + '/../lib/sql/parser.racc.rb'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
-  def setup
-    @parser = SQL::Parser.new
-  end
-
   def test_parentheses
     assert_sql 'SELECT ((1 + 2) * ((3 - 4) / 5))', 'SELECT (1 + 2) * (3 - 4) / 5'
   end
@@ -75,7 +70,7 @@ class TestParser < Test::Unit::TestCase
   private
 
   def assert_sql(expected, given)
-    assert_equal expected, @parser.scan_str(given).to_sql
+    assert_equal expected, SQL::Parser.parse(given).to_sql
   end
 
   def assert_understands(sql)
