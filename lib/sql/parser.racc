@@ -1,6 +1,9 @@
 class SQL::Parser
 
 rule
+  query_specification:
+    SELECT literal { result = SQL::Statement::Select.new(val[1]) }
+
   literal:
     signed_numeric_literal
     | general_literal

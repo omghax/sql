@@ -3,6 +3,7 @@ require 'test/unit'
 
 class TestStatement < Test::Unit::TestCase
   def test_select
+    assert_sql 'SELECT 1', SQL::Statement::Select.new(SQL::Statement::Integer.new(1))
     assert_sql 'SELECT * FROM users', SQL::Statement::Select.new(SQL::Statement::All.new, SQL::Statement::TableExpression.new(SQL::Statement::FromClause.new(SQL::Statement::Table.new('users'))))
   end
 

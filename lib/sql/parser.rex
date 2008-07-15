@@ -26,6 +26,7 @@ rule
             {BLANK}     # no action
 
 # keywords
+            SELECT      { [:SELECT, text] }
             DATE        { [:DATE, text] }
 
 # tokens

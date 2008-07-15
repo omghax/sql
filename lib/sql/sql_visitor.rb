@@ -5,7 +5,7 @@ module SQL
     end
 
     def visit_Select(o)
-      "SELECT #{visit(o.list)} #{visit(o.table_expression)}"
+      "SELECT #{visit_all([o.list, o.table_expression].compact).join(' ')}"
     end
 
     def visit_SelectList(o)
@@ -170,8 +170,12 @@ module SQL
       "(#{visit(o.left)} #{operator} #{visit(o.right)})"
     end
 
+    def visit_all(nodes)
+      nodes.collect { |e| visit(e) }
+    end
+
     def arrayize(arr)
-      arr.collect { |e| visit(e) }.join(', ')
+      visit_all(arr).join(', ')
     end
   end
 end

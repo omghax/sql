@@ -27,7 +27,7 @@ module SQL
     end
 
     class Select < Node
-      def initialize(list, table_expression)
+      def initialize(list, table_expression = nil)
         @list = list
         @table_expression = table_expression
       end
