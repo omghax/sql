@@ -7,7 +7,8 @@ rule
     SELECT derived_column { result = SQL::Statement::Select.new(val[1]) }
 
   derived_column:
-    value_expression
+    value_expression AS column_name { result = SQL::Statement::As.new(val[0], val[2]) }
+    | value_expression
 
 # search condition
   value_expression:
@@ -35,6 +36,10 @@ rule
   unsigned_literal:
     unsigned_numeric_literal
     | general_literal
+
+# sql module
+  column_name:
+    identifier
 
 # literals
   general_literal:

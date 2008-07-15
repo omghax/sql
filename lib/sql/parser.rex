@@ -10,6 +10,8 @@ macro
   DAYS    {UINT}
   DATE    {YEARS}-{MONTHS}-{DAYS}
 
+  IDENT   \w+
+
 rule
 # [:state]  pattern     [actions]
 
@@ -28,6 +30,7 @@ rule
 # keywords
             SELECT      { [:SELECT, text] }
             DATE        { [:DATE, text] }
+            AS          { [:AS, text] }
 
 # tokens
             \(          { [:left_paren, text] }
@@ -37,6 +40,9 @@ rule
             \+          { [:plus_sign, text] }
             \-          { [:minus_sign, text] }
             \.          { [:period, text] }
+
+# identifier
+            {IDENT}     { [:identifier, text] }
 
 ---- header ----
 require 'date'

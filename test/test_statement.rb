@@ -102,6 +102,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql 'id', SQL::Statement::Column.new('id')
   end
 
+  def test_as
+    assert_sql '1 AS a', SQL::Statement::As.new(SQL::Statement::Integer.new(1), 'a')
+  end
+
   def test_multiply
     assert_sql '(2 * 2)', SQL::Statement::Multiply.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(2))
   end

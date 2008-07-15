@@ -2,6 +2,11 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_as
+    assert_understands 'SELECT 1 AS x'
+    assert_understands 'SELECT (1 + 1) AS y'
+  end
+
   def test_parentheses
     assert_sql 'SELECT ((1 + 2) * ((3 - 4) / 5))', 'SELECT (1 + 2) * (3 - 4) / 5'
   end

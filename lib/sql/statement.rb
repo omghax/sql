@@ -216,6 +216,16 @@ module SQL
       attr_reader :name
     end
 
+    class As < Node
+      def initialize(value, name)
+        @value = value
+        @name = name
+      end
+
+      attr_reader :value
+      attr_reader :name
+    end
+
     class Arithmetic < Node
       def initialize(left, right)
         @left = left

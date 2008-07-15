@@ -113,6 +113,10 @@ module SQL
       o.name
     end
 
+    def visit_As(o)
+      "#{visit(o.value)} AS #{o.name}"
+    end
+
     def visit_Multiply(o)
       arithmetic('*', o)
     end
