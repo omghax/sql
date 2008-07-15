@@ -113,6 +113,22 @@ module SQL
       o.name
     end
 
+    def visit_Multiply(o)
+      arithmetic('*', o)
+    end
+
+    def visit_Divide(o)
+      arithmetic('/', o)
+    end
+
+    def visit_Add(o)
+      arithmetic('+', o)
+    end
+
+    def visit_Subtract(o)
+      arithmetic('-', o)
+    end
+
     def visit_UnaryPlus(o)
       "+#{visit(o.value)}"
     end
@@ -160,6 +176,10 @@ module SQL
 
       # # FIXME
       # str.gsub("'", "\\\'")
+    end
+
+    def arithmetic(operator, o)
+      [visit(o.left), operator, visit(o.right)].join(' ')
     end
 
     def comparison(operator, o)

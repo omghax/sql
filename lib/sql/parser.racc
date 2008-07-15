@@ -1,9 +1,33 @@
 class SQL::Parser
 
 rule
-  query_specification:
-    SELECT literal { result = SQL::Statement::Select.new(val[1]) }
 
+# queries
+  query_specification:
+    SELECT derived_column { result = SQL::Statement::Select.new(val[1]) }
+
+  derived_column:
+    value_expression
+
+# search condition
+  value_expression:
+    numeric_value_expression
+
+  numeric_value_expression:
+    term plus_sign numeric_value_expression { result = SQL::Statement::Add.new(val[0], val[2]) }
+    | term minus_sign numeric_value_expression { result = SQL::Statement::Subtract.new(val[0], val[2]) }
+    | term
+
+  term:
+    factor asterisk term { result = SQL::Statement::Multiply.new(val[0], val[2]) }
+    | factor solidus term { result = SQL::Statement::Divide.new(val[0], val[2]) }
+    | factor
+
+  factor:
+    # NOTE: shortcut.  this is wrong.
+    literal
+
+# literals
   literal:
     signed_numeric_literal
     | general_literal

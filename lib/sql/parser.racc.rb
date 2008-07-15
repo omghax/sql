@@ -17,72 +17,95 @@ module SQL
 
 racc_reduce_table = [
  0, 0, :racc_error,
- 2, 11, :_reduce_1,
- 1, 12, :_reduce_none,
- 1, 12, :_reduce_none,
- 1, 14, :_reduce_4,
+ 2, 13, :_reduce_1,
  1, 14, :_reduce_none,
  1, 15, :_reduce_none,
- 2, 16, :_reduce_7,
- 2, 13, :_reduce_8,
- 2, 13, :_reduce_9,
- 1, 13, :_reduce_none,
- 3, 17, :_reduce_11,
- 2, 17, :_reduce_12,
- 2, 17, :_reduce_13,
- 1, 17, :_reduce_14 ]
+ 3, 16, :_reduce_4,
+ 3, 16, :_reduce_5,
+ 1, 16, :_reduce_none,
+ 3, 17, :_reduce_7,
+ 3, 17, :_reduce_8,
+ 1, 17, :_reduce_none,
+ 1, 18, :_reduce_none,
+ 1, 19, :_reduce_none,
+ 1, 19, :_reduce_none,
+ 1, 21, :_reduce_13,
+ 1, 21, :_reduce_none,
+ 1, 22, :_reduce_none,
+ 2, 23, :_reduce_16,
+ 2, 20, :_reduce_17,
+ 2, 20, :_reduce_18,
+ 1, 20, :_reduce_none,
+ 3, 24, :_reduce_20,
+ 2, 24, :_reduce_21,
+ 2, 24, :_reduce_22,
+ 1, 24, :_reduce_23 ]
 
-racc_reduce_n = 15
+racc_reduce_n = 24
 
-racc_shift_n = 23
+racc_shift_n = 36
 
 racc_action_table = [
-     6,     8,     2,    12,    13,    14,    15,    14,    15,    14,
-    15,    17,    16,     3,    20,    21,    22 ]
+     7,     9,    18,     3,    13,    15,    28,    18,     3,     7,
+     9,    24,    25,    13,    15,    30,    18,     3,     7,     9,
+    26,    27,    13,    15,    29,    18,     3,     7,     9,    18,
+     3,    13,    15,    21,    18,     3,     7,     9,    20,     1,
+    13,    15,    35,    18,     3 ]
 
 racc_action_check = [
-     2,     2,     0,     2,     2,     2,     2,    13,    13,    12,
-    12,     8,     3,     1,    14,    15,    20 ]
+     1,     1,     9,     9,     1,     1,    15,     1,     1,    27,
+    27,    12,    12,    27,    27,    20,    27,    27,    26,    26,
+    14,    14,    26,    26,    18,    26,    26,    25,    25,     7,
+     7,    25,    25,     3,    25,    25,    24,    24,     2,     0,
+    24,    24,    29,    24,    24 ]
 
 racc_action_pointer = [
-     0,    13,    -3,    12,   nil,   nil,   nil,   nil,     6,   nil,
-   nil,   nil,     1,    -1,     5,     7,   nil,   nil,   nil,   nil,
-     8,   nil,   nil ]
+    37,    -3,    38,    23,   nil,   nil,   nil,    19,   nil,    -8,
+   nil,   nil,     8,   nil,    15,    -3,   nil,   nil,    13,   nil,
+    15,   nil,   nil,   nil,    33,    24,    15,     6,   nil,    32,
+   nil,   nil,   nil,   nil,   nil,   nil ]
 
 racc_action_default = [
-   -15,   -15,   -15,   -15,    -1,    -2,    -4,    -3,   -15,    -5,
-    -6,   -10,   -15,   -15,   -14,   -15,    23,    -7,    -8,    -9,
-   -12,   -13,   -11 ]
+   -24,   -24,   -24,   -24,   -14,   -15,   -19,   -24,    -1,   -24,
+    -2,    -3,    -6,   -13,    -9,   -24,   -10,   -11,   -23,   -12,
+   -24,   -22,   -17,   -18,   -24,   -24,   -24,   -24,   -16,   -21,
+    36,    -4,    -5,    -7,    -8,   -20 ]
 
 racc_goto_table = [
-    11,     7,     5,     4,     9,    10,     1,   nil,   nil,   nil,
-    18,    19 ]
+    11,    22,    10,    23,    33,    34,     8,     2,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,    31,    32 ]
 
 racc_goto_check = [
-     7,     4,     3,     2,     5,     6,     1,   nil,   nil,   nil,
-     7,     7 ]
+     4,    12,     3,    12,     5,     5,     2,     1,   nil,   nil,
+   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil,
+   nil,   nil,   nil,     4,     4 ]
 
 racc_goto_pointer = [
-   nil,     6,     1,     0,    -1,     2,     3,    -2 ]
+   nil,     7,     5,     1,    -1,   -22,   nil,   nil,   nil,   nil,
+   nil,   nil,    -6 ]
 
 racc_goto_default = [
-   nil,   nil,   nil,   nil,   nil,   nil,   nil,   nil ]
+   nil,   nil,   nil,   nil,   nil,    12,    14,    16,    17,    19,
+     4,     5,     6 ]
 
 racc_token_table = {
  false => 0,
  Object.new => 1,
  :SELECT => 2,
- :character_string_literal => 3,
- :DATE => 4,
- :date_string => 5,
- :plus_sign => 6,
- :minus_sign => 7,
- :unsigned_integer => 8,
- :period => 9 }
+ :plus_sign => 3,
+ :minus_sign => 4,
+ :asterisk => 5,
+ :solidus => 6,
+ :character_string_literal => 7,
+ :DATE => 8,
+ :date_string => 9,
+ :unsigned_integer => 10,
+ :period => 11 }
 
 racc_use_result_var = true
 
-racc_nt_base = 10
+racc_nt_base = 12
 
 Racc_arg = [
  racc_action_table,
@@ -104,15 +127,22 @@ Racc_token_to_s_table = [
 '$end',
 'error',
 'SELECT',
+'plus_sign',
+'minus_sign',
+'asterisk',
+'solidus',
 'character_string_literal',
 'DATE',
 'date_string',
-'plus_sign',
-'minus_sign',
 'unsigned_integer',
 'period',
 '$start',
 'query_specification',
+'derived_column',
+'value_expression',
+'numeric_value_expression',
+'term',
+'factor',
 'literal',
 'signed_numeric_literal',
 'general_literal',
@@ -126,7 +156,7 @@ Racc_debug_parser = false
 
  # reduce 0 omitted
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 4
+module_eval <<'.,.,', 'lib/sql/parser.racc', 6
   def _reduce_1( val, _values, result )
  result = SQL::Statement::Select.new(val[1])
    result
@@ -137,63 +167,101 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 4
 
  # reduce 3 omitted
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 11
+module_eval <<'.,.,', 'lib/sql/parser.racc', 16
   def _reduce_4( val, _values, result )
- result = SQL::Statement::String.new(val[0])
+ result = SQL::Statement::Add.new(val[0], val[2])
    result
   end
 .,.,
 
- # reduce 5 omitted
+module_eval <<'.,.,', 'lib/sql/parser.racc', 17
+  def _reduce_5( val, _values, result )
+ result = SQL::Statement::Subtract.new(val[0], val[2])
+   result
+  end
+.,.,
 
  # reduce 6 omitted
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 18
-  def _reduce_7( val, _values, result )
- result = SQL::Statement::Date.new(val[1])
-   result
-  end
-.,.,
-
 module_eval <<'.,.,', 'lib/sql/parser.racc', 21
-  def _reduce_8( val, _values, result )
- result = SQL::Statement::UnaryPlus.new(val[1])
+  def _reduce_7( val, _values, result )
+ result = SQL::Statement::Multiply.new(val[0], val[2])
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 22
-  def _reduce_9( val, _values, result )
+  def _reduce_8( val, _values, result )
+ result = SQL::Statement::Divide.new(val[0], val[2])
+   result
+  end
+.,.,
+
+ # reduce 9 omitted
+
+ # reduce 10 omitted
+
+ # reduce 11 omitted
+
+ # reduce 12 omitted
+
+module_eval <<'.,.,', 'lib/sql/parser.racc', 35
+  def _reduce_13( val, _values, result )
+ result = SQL::Statement::String.new(val[0])
+   result
+  end
+.,.,
+
+ # reduce 14 omitted
+
+ # reduce 15 omitted
+
+module_eval <<'.,.,', 'lib/sql/parser.racc', 42
+  def _reduce_16( val, _values, result )
+ result = SQL::Statement::Date.new(val[1])
+   result
+  end
+.,.,
+
+module_eval <<'.,.,', 'lib/sql/parser.racc', 45
+  def _reduce_17( val, _values, result )
+ result = SQL::Statement::UnaryPlus.new(val[1])
+   result
+  end
+.,.,
+
+module_eval <<'.,.,', 'lib/sql/parser.racc', 46
+  def _reduce_18( val, _values, result )
  result = SQL::Statement::UnaryMinus.new(val[1])
    result
   end
 .,.,
 
- # reduce 10 omitted
+ # reduce 19 omitted
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 26
-  def _reduce_11( val, _values, result )
+module_eval <<'.,.,', 'lib/sql/parser.racc', 50
+  def _reduce_20( val, _values, result )
  result = SQL::Statement::Float.new("#{val[0]}.#{val[2]}".to_f)
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 27
-  def _reduce_12( val, _values, result )
+module_eval <<'.,.,', 'lib/sql/parser.racc', 51
+  def _reduce_21( val, _values, result )
  result = SQL::Statement::Float.new(val[0])
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 28
-  def _reduce_13( val, _values, result )
+module_eval <<'.,.,', 'lib/sql/parser.racc', 52
+  def _reduce_22( val, _values, result )
  result = SQL::Statement::Float.new("0.#{val[1]}".to_f)
    result
   end
 .,.,
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 29
-  def _reduce_14( val, _values, result )
+module_eval <<'.,.,', 'lib/sql/parser.racc', 53
+  def _reduce_23( val, _values, result )
  result = SQL::Statement::Integer.new(val[0])
    result
   end

@@ -102,6 +102,22 @@ class TestStatement < Test::Unit::TestCase
     assert_sql 'id', SQL::Statement::Column.new('id')
   end
 
+  def test_multiply
+    assert_sql '2 * 2', SQL::Statement::Multiply.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(2))
+  end
+
+  def test_divide
+    assert_sql '2 / 2', SQL::Statement::Divide.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(2))
+  end
+
+  def test_add
+    assert_sql '2 + 2', SQL::Statement::Add.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(2))
+  end
+
+  def test_subtract
+    assert_sql '2 - 2', SQL::Statement::Subtract.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(2))
+  end
+
   def test_unary_plus
     assert_sql '+1', SQL::Statement::UnaryPlus.new(SQL::Statement::Integer.new(1))
   end
