@@ -81,8 +81,11 @@ rule
     | boolean_term AND boolean_factor { result = SQL::Statement::And.new(val[0], val[2]) }
 
   boolean_factor:
-    # FIXME: shortcut
-    boolean_primary
+    : NOT boolean_test { result = SQL::Statement::Not.new(val[1]) }
+    | boolean_test
+
+  boolean_test
+    : boolean_primary
 
   boolean_primary
     : predicate
