@@ -14,12 +14,12 @@ module SQL
 
   class Parser < Racc::Parser
 
-module_eval <<'..end lib/sql/parser.racc modeval..idafd1aabe81', 'lib/sql/parser.racc', 166
+module_eval <<'..end lib/sql/parser.racc modeval..iddbe196f8f8', 'lib/sql/parser.racc', 166
 
 def self.parse(sql)
   new.scan_str(sql)
 end
-..end lib/sql/parser.racc modeval..idafd1aabe81
+..end lib/sql/parser.racc modeval..iddbe196f8f8
 
 ##### racc 1.4.5 generates ###
 
@@ -487,7 +487,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 41
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 44
   def _reduce_20( val, _values, result )
- result = SQL::Statement::NotBetween.new(val[0], val[3], val[5])
+ result = SQL::Statement::Not.new(SQL::Statement::Between.new(val[0], val[3], val[5]))
    result
   end
 .,.,
@@ -501,7 +501,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 45
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 48
   def _reduce_22( val, _values, result )
- result = SQL::Statement::NotIn.new(val[0], val[3])
+ result = SQL::Statement::Not.new(SQL::Statement::In.new(val[0], val[3]))
    result
   end
 .,.,
@@ -531,7 +531,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 55
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 62
   def _reduce_27( val, _values, result )
- result = SQL::Statement::NotLike.new(val[0], val[3])
+ result = SQL::Statement::Not.new(SQL::Statement::Like.new(val[0], val[3]))
    result
   end
 .,.,
@@ -545,14 +545,14 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 63
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 66
   def _reduce_29( val, _values, result )
- result = SQL::Statement::IsNotNull.new(val[0])
+ result = SQL::Statement::Not.new(SQL::Statement::Is.new(val[0], SQL::Statement::Null.new))
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 67
   def _reduce_30( val, _values, result )
- result = SQL::Statement::IsNull.new(val[0])
+ result = SQL::Statement::Is.new(val[0], SQL::Statement::Null.new)
    result
   end
 .,.,

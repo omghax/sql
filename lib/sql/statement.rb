@@ -139,22 +139,6 @@ module SQL
     class And < SearchCondition
     end
 
-    class IsNotNull < Node
-      def initialize(value)
-        @value = value
-      end
-
-      attr_reader :value
-    end
-
-    class IsNull < Node
-      def initialize(value)
-        @value = value
-      end
-
-      attr_reader :value
-    end
-
     class ComparisonPredicate < Node
       def initialize(left, right)
         @left = left
@@ -165,28 +149,13 @@ module SQL
       attr_reader :right
     end
 
-    class NotLike < ComparisonPredicate
+    class Is < ComparisonPredicate
     end
 
     class Like < ComparisonPredicate
     end
 
-    class NotIn < ComparisonPredicate
-    end
-
     class In < ComparisonPredicate
-    end
-
-    class NotBetween < Node
-      def initialize(left, min, max)
-        @left = left
-        @min = min
-        @max = max
-      end
-
-      attr_reader :left
-      attr_reader :min
-      attr_reader :max
     end
 
     class Between < Node
@@ -283,6 +252,9 @@ module SQL
       end
 
       attr_reader :value
+    end
+
+    class Not < Unary
     end
 
     class UnaryPlus < Unary

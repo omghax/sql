@@ -42,11 +42,11 @@ rule
     | greater_than_or_equals_operator { result = SQL::Statement::GreaterOrEquals }
 
   between_predicate
-    : row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::NotBetween.new(val[0], val[3], val[5]) }
+    : row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Not.new(SQL::Statement::Between.new(val[0], val[3], val[5])) }
     | row_value_constructor BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Between.new(val[0], val[2], val[4]) }
 
   in_predicate
-    : row_value_constructor NOT IN in_predicate_value { result = SQL::Statement::NotIn.new(val[0], val[3]) }
+    : row_value_constructor NOT IN in_predicate_value { result = SQL::Statement::Not.new(SQL::Statement::In.new(val[0], val[3])) }
     | row_value_constructor IN in_predicate_value { result = SQL::Statement::In.new(val[0], val[2]) }
 
   in_predicate_value
@@ -60,12 +60,12 @@ rule
     # FIXME: the SQL-92 grammar indicates these should be
     # character_value_expression nodes, but changing them causes reduce/reduce
     # conflicts.
-    : row_value_constructor NOT LIKE row_value_constructor { result = SQL::Statement::NotLike.new(val[0], val[3]) }
+    : row_value_constructor NOT LIKE row_value_constructor { result = SQL::Statement::Not.new(SQL::Statement::Like.new(val[0], val[3])) }
     | row_value_constructor LIKE row_value_constructor { result = SQL::Statement::Like.new(val[0], val[2]) }
 
   null_predicate
-    : row_value_constructor IS NOT NULL { result = SQL::Statement::IsNotNull.new(val[0]) }
-    | row_value_constructor IS NULL { result = SQL::Statement::IsNull.new(val[0]) }
+    : row_value_constructor IS NOT NULL { result = SQL::Statement::Not.new(SQL::Statement::Is.new(val[0], SQL::Statement::Null.new)) }
+    | row_value_constructor IS NULL { result = SQL::Statement::Is.new(val[0], SQL::Statement::Null.new) }
 
 # constraints
   table_name

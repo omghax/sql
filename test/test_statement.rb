@@ -55,15 +55,15 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_is_not_null
-    assert_sql '1 IS NOT NULL', SQL::Statement::IsNotNull.new(SQL::Statement::Integer.new(1))
+    assert_sql '1 IS NOT NULL', SQL::Statement::Not.new(SQL::Statement::Is.new(SQL::Statement::Integer.new(1), SQL::Statement::Null.new))
   end
 
   def test_is_null
-    assert_sql '1 IS NULL', SQL::Statement::IsNull.new(SQL::Statement::Integer.new(1))
+    assert_sql '1 IS NULL', SQL::Statement::Is.new(SQL::Statement::Integer.new(1), SQL::Statement::Null.new)
   end
 
   def test_not_like
-    assert_sql "'hello' NOT LIKE 'h%'", SQL::Statement::NotLike.new(SQL::Statement::String.new('hello'), SQL::Statement::String.new('h%'))
+    assert_sql "'hello' NOT LIKE 'h%'", SQL::Statement::Not.new(SQL::Statement::Like.new(SQL::Statement::String.new('hello'), SQL::Statement::String.new('h%')))
   end
 
   def test_like
@@ -71,7 +71,7 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_not_in
-    assert_sql '1 NOT IN (1, 2, 3)', SQL::Statement::NotIn.new(SQL::Statement::Integer.new(1), [SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(3)])
+    assert_sql '1 NOT IN (1, 2, 3)', SQL::Statement::Not.new(SQL::Statement::In.new(SQL::Statement::Integer.new(1), [SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(3)]))
   end
 
   def test_in
@@ -79,7 +79,7 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_not_between
-    assert_sql '2 NOT BETWEEN 1 AND 3', SQL::Statement::NotBetween.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(3))
+    assert_sql '2 NOT BETWEEN 1 AND 3', SQL::Statement::Not.new(SQL::Statement::Between.new(SQL::Statement::Integer.new(2), SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(3)))
   end
 
   def test_between

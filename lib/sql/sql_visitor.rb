@@ -1,5 +1,9 @@
 module SQL
   class SQLVisitor
+    def initialize
+      @negated = false
+    end
+
     def visit(node)
       node.accept(self)
     end
@@ -65,36 +69,36 @@ module SQL
       search_condition('AND', o)
     end
 
-    def visit_IsNotNull(o)
-      "#{visit(o.value)} IS NOT NULL"
-    end
-
-    def visit_IsNull(o)
-      "#{visit(o.value)} IS NULL"
-    end
-
-    def visit_NotLike(o)
-      comparison('NOT LIKE', o)
+    def visit_Is(o)
+      if @negated
+        "#{visit(o.left)} IS NOT #{visit(o.right)}"
+      else
+        "#{visit(o.left)} IS #{visit(o.right)}"
+      end
     end
 
     def visit_Like(o)
-      comparison('LIKE', o)
-    end
-
-    def visit_NotIn(o)
-      "#{visit(o.left)} NOT IN (#{arrayize(o.right)})"
+      if @negated
+        comparison('NOT LIKE', o)
+      else
+        comparison('LIKE', o)
+      end
     end
 
     def visit_In(o)
-      "#{visit(o.left)} IN (#{arrayize(o.right)})"
-    end
-
-    def visit_NotBetween(o)
-      "#{visit(o.left)} NOT BETWEEN #{visit(o.min)} AND #{visit(o.max)}"
+      if @negated
+        "#{visit(o.left)} NOT IN (#{arrayize(o.right)})"
+      else
+        "#{visit(o.left)} IN (#{arrayize(o.right)})"
+      end
     end
 
     def visit_Between(o)
-      "#{visit(o.left)} BETWEEN #{visit(o.min)} AND #{visit(o.max)}"
+      if @negated
+        "#{visit(o.left)} NOT BETWEEN #{visit(o.min)} AND #{visit(o.max)}"
+      else
+        "#{visit(o.left)} BETWEEN #{visit(o.min)} AND #{visit(o.max)}"
+      end
     end
 
     def visit_GreaterOrEquals(o)
@@ -153,6 +157,10 @@ module SQL
       arithmetic('-', o)
     end
 
+    def visit_Not(o)
+      negate { visit(o.value) }
+    end
+
     def visit_UnaryPlus(o)
       "+#{visit(o.value)}"
     end
@@ -194,6 +202,13 @@ module SQL
     end
 
     private
+
+    def negate
+      @negated = true
+      yield
+    ensure
+      @negated = false
+    end
 
     def quote(str)
       str
