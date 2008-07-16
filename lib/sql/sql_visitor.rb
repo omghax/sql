@@ -69,6 +69,10 @@ module SQL
       "#{visit(o.value)} IS NULL"
     end
 
+    def visit_NotLike(o)
+      comparison('NOT LIKE', o)
+    end
+
     def visit_Like(o)
       comparison('LIKE', o)
     end

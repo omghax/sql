@@ -101,6 +101,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/OR/))
            @rex_tokens.push action { [:OR, text] }
 
+        when (text = ss.scan(/LIKE/))
+           @rex_tokens.push action { [:LIKE, text] }
+
         when (text = ss.scan(/<>/))
            @rex_tokens.push action { [:not_equals_operator, text] }
 

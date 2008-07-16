@@ -10,6 +10,14 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM users WHERE (id = 1 AND age = 18)'
   end
 
+  def test_not_like
+    assert_understands "SELECT * FROM users WHERE name NOT LIKE 'Joe%'"
+  end
+
+  def test_like
+    assert_understands "SELECT * FROM users WHERE name LIKE 'Joe%'"
+  end
+
   def test_not_in
     assert_understands 'SELECT * FROM users WHERE id NOT IN (1, 2, 3)'
   end

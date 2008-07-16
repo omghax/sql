@@ -38,6 +38,7 @@ rule
             NOT         { [:NOT, text] }
             IN          { [:IN, text] }
             OR          { [:OR, text] }
+            LIKE        { [:LIKE, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

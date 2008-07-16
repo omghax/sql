@@ -157,6 +157,9 @@ module SQL
       attr_reader :right
     end
 
+    class NotLike < ComparisonPredicate
+    end
+
     class Like < ComparisonPredicate
     end
 

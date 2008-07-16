@@ -58,6 +58,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql '1 IS NULL', SQL::Statement::IsNull.new(SQL::Statement::Integer.new(1))
   end
 
+  def test_not_like
+    assert_sql "'hello' NOT LIKE 'h%'", SQL::Statement::NotLike.new(SQL::Statement::String.new('hello'), SQL::Statement::String.new('h%'))
+  end
+
   def test_like
     assert_sql "'hello' LIKE 'h%'", SQL::Statement::Like.new(SQL::Statement::String.new('hello'), SQL::Statement::String.new('h%'))
   end

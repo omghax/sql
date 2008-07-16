@@ -56,6 +56,13 @@ rule
     : value_expression comma in_value_list { result = [val[0]] + Array(val[2]) }
     | value_expression
 
+  like_predicate
+    # FIXME: the SQL-92 grammar indicates these should be
+    # character_value_expression nodes, but changing them causes reduce/reduce
+    # conflicts.
+    : row_value_constructor NOT LIKE row_value_constructor { result = SQL::Statement::NotLike.new(val[0], val[3]) }
+    | row_value_constructor LIKE row_value_constructor { result = SQL::Statement::Like.new(val[0], val[2]) }
+
 # constraints
   table_name
     : identifier
@@ -81,6 +88,7 @@ rule
     : comparison_predicate
     | between_predicate
     | in_predicate
+    | like_predicate
 
   comparison_predicate
     # FIXME: shortcut
