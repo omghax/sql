@@ -182,9 +182,6 @@ module SQL
     class Less < ComparisonPredicate
     end
 
-    class NotEquals < ComparisonPredicate
-    end
-
     class Equals < ComparisonPredicate
     end
 

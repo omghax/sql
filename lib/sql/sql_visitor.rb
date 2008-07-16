@@ -117,12 +117,12 @@ module SQL
       comparison('<', o)
     end
 
-    def visit_NotEquals(o)
-      comparison('<>', o)
-    end
-
     def visit_Equals(o)
-      comparison('=', o)
+      if @negated
+        comparison('<>', o)
+      else
+        comparison('=', o)
+      end
     end
 
     def visit_Table(o)

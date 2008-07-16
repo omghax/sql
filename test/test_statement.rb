@@ -103,7 +103,7 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_not_equals
-    assert_sql '1 <> 1', SQL::Statement::NotEquals.new(SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(1))
+    assert_sql '1 <> 1', SQL::Statement::Not.new(SQL::Statement::Equals.new(SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(1)))
   end
 
   def test_equals

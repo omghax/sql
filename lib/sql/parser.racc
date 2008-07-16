@@ -33,14 +33,6 @@ rule
     : WHERE search_condition { result = SQL::Statement::WhereClause.new(val[1]) }
 
 # query expression components
-  comp_op
-    : equals_operator { result = SQL::Statement::Equals }
-    | not_equals_operator { result = SQL::Statement::NotEquals }
-    | less_than_operator { result = SQL::Statement::Less }
-    | greater_than_operator { result = SQL::Statement::Greater }
-    | less_than_or_equals_operator { result = SQL::Statement::LessOrEquals }
-    | greater_than_or_equals_operator { result = SQL::Statement::GreaterOrEquals }
-
   between_predicate
     : row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Not.new(SQL::Statement::Between.new(val[0], val[3], val[5])) }
     | row_value_constructor BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Between.new(val[0], val[2], val[4]) }
@@ -99,8 +91,12 @@ rule
     | null_predicate
 
   comparison_predicate
-    # FIXME: shortcut
-    : row_value_constructor comp_op row_value_constructor { result = val[1].new(val[0], val[2]) }
+    : row_value_constructor equals_operator row_value_constructor { result = SQL::Statement::Equals.new(val[0], val[2]) }
+    | row_value_constructor not_equals_operator row_value_constructor { result = SQL::Statement::Not.new(SQL::Statement::Equals.new(val[0], val[2])) }
+    | row_value_constructor less_than_operator row_value_constructor { result = SQL::Statement::Less.new(val[0], val[2]) }
+    | row_value_constructor greater_than_operator row_value_constructor { result = SQL::Statement::Greater.new(val[0], val[2]) }
+    | row_value_constructor less_than_or_equals_operator row_value_constructor { result = SQL::Statement::LessOrEquals.new(val[0], val[2]) }
+    | row_value_constructor greater_than_or_equals_operator row_value_constructor { result = SQL::Statement::GreaterOrEquals.new(val[0], val[2]) }
 
   row_value_constructor
     : row_value_constructor_element
