@@ -39,6 +39,8 @@ rule
             IN          { [:IN, text] }
             OR          { [:OR, text] }
             LIKE        { [:LIKE, text] }
+            IS          { [:IS, text] }
+            NULL        { [:NULL, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

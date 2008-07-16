@@ -65,6 +65,10 @@ module SQL
       search_condition('AND', o)
     end
 
+    def visit_IsNotNull(o)
+      "#{visit(o.value)} IS NOT NULL"
+    end
+
     def visit_IsNull(o)
       "#{visit(o.value)} IS NULL"
     end

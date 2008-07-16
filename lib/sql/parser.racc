@@ -63,6 +63,10 @@ rule
     : row_value_constructor NOT LIKE row_value_constructor { result = SQL::Statement::NotLike.new(val[0], val[3]) }
     | row_value_constructor LIKE row_value_constructor { result = SQL::Statement::Like.new(val[0], val[2]) }
 
+  null_predicate
+    : row_value_constructor IS NOT NULL { result = SQL::Statement::IsNotNull.new(val[0]) }
+    | row_value_constructor IS NULL { result = SQL::Statement::IsNull.new(val[0]) }
+
 # constraints
   table_name
     : identifier
@@ -89,6 +93,7 @@ rule
     | between_predicate
     | in_predicate
     | like_predicate
+    | null_predicate
 
   comparison_predicate
     # FIXME: shortcut

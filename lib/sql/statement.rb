@@ -139,6 +139,14 @@ module SQL
     class And < SearchCondition
     end
 
+    class IsNotNull < Node
+      def initialize(value)
+        @value = value
+      end
+
+      attr_reader :value
+    end
+
     class IsNull < Node
       def initialize(value)
         @value = value

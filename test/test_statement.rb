@@ -54,6 +54,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql '(TRUE AND TRUE)', SQL::Statement::And.new(SQL::Statement::True.new, SQL::Statement::True.new)
   end
 
+  def test_is_not_null
+    assert_sql '1 IS NOT NULL', SQL::Statement::IsNotNull.new(SQL::Statement::Integer.new(1))
+  end
+
   def test_is_null
     assert_sql '1 IS NULL', SQL::Statement::IsNull.new(SQL::Statement::Integer.new(1))
   end
