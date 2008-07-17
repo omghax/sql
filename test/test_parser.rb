@@ -81,6 +81,7 @@ class TestParser < Test::Unit::TestCase
   def test_from_clause
     assert_understands 'SELECT 1 FROM users'
     assert_understands 'SELECT id FROM users'
+    assert_understands 'SELECT users.id FROM users'
     assert_understands 'SELECT * FROM users'
   end
 

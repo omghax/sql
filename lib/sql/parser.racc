@@ -132,7 +132,11 @@ rule
     | general_literal
 
   column_reference
-    : column_name { result = SQL::Statement::Column.new(val[0]) }
+    : qualifier period column_name { result = SQL::Statement::QualifiedColumn.new(val[0], val[2]) }
+    | column_name { result = SQL::Statement::Column.new(val[0]) }
+
+  qualifier
+    : table_name
 
 # sql module
   column_name
