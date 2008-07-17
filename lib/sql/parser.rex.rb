@@ -95,6 +95,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/NOT/))
            @rex_tokens.push action { [:NOT, text] }
 
+        when (text = ss.scan(/INNER/))
+           @rex_tokens.push action { [:INNER, text] }
+
         when (text = ss.scan(/IN/))
            @rex_tokens.push action { [:IN, text] }
 
@@ -139,6 +142,9 @@ class Parser < Racc::Parser
 
         when (text = ss.scan(/JOIN/))
            @rex_tokens.push action { [:JOIN, text] }
+
+        when (text = ss.scan(/ON/))
+           @rex_tokens.push action { [:ON, text] }
 
         when (text = ss.scan(/<>/))
            @rex_tokens.push action { [:not_equals_operator, text] }

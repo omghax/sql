@@ -31,10 +31,20 @@ rule
 
   joined_table
     : cross_join
+    | qualified_join
 
   cross_join
     : table_reference comma table_name { result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[2])) }
     | table_reference CROSS JOIN table_name { result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[3])) }
+
+  qualified_join
+    : table_reference INNER JOIN table_reference join_specification { result = SQL::Statement::InnerJoin.new(val[0], val[3], val[4]) }
+
+  join_specification
+    : join_condition
+
+  join_condition
+    : ON search_condition { result = val[1] }
 
   where_clause
     : # no action

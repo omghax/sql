@@ -149,6 +149,10 @@ module SQL
       "#{visit(o.left)} CROSS JOIN #{visit(o.right)}"
     end
 
+    def visit_InnerJoin(o)
+      "#{visit(o.left)} INNER JOIN #{visit(o.right)} ON #{visit(o.search_condition)}"
+    end
+
     def visit_Table(o)
       o.name
     end

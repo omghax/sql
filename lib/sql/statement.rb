@@ -208,7 +208,7 @@ module SQL
     class Count < Aggregate
     end
 
-    class CrossJoin < Node
+    class JoinedTable < Node
       def initialize(left, right)
         @left = left
         @right = right
@@ -216,6 +216,21 @@ module SQL
 
       attr_reader :left
       attr_reader :right
+    end
+
+    class CrossJoin < JoinedTable
+    end
+
+    class QualifiedJoin < JoinedTable
+      def initialize(left, right, search_condition)
+        super(left, right)
+        @search_condition = search_condition
+      end
+
+      attr_reader :search_condition
+    end
+
+    class InnerJoin < QualifiedJoin
     end
 
     class Table < Node

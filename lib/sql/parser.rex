@@ -36,6 +36,7 @@ rule
             BETWEEN     { [:BETWEEN, text] }
             AND         { [:AND, text] }
             NOT         { [:NOT, text] }
+            INNER       { [:INNER, text] }
             IN          { [:IN, text] }
             OR          { [:OR, text] }
             LIKE        { [:LIKE, text] }
@@ -51,6 +52,7 @@ rule
             HAVING      { [:HAVING, text] }
             CROSS       { [:CROSS, text] }
             JOIN        { [:JOIN, text] }
+            ON          { [:ON, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }
