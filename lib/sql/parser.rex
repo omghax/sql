@@ -49,6 +49,8 @@ rule
             GROUP       { [:GROUP, text] }
             BY          { [:BY, text] }
             HAVING      { [:HAVING, text] }
+            CROSS       { [:CROSS, text] }
+            JOIN        { [:JOIN, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

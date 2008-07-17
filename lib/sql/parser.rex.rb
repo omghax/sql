@@ -134,6 +134,12 @@ class Parser < Racc::Parser
         when (text = ss.scan(/HAVING/))
            @rex_tokens.push action { [:HAVING, text] }
 
+        when (text = ss.scan(/CROSS/))
+           @rex_tokens.push action { [:CROSS, text] }
+
+        when (text = ss.scan(/JOIN/))
+           @rex_tokens.push action { [:JOIN, text] }
+
         when (text = ss.scan(/<>/))
            @rex_tokens.push action { [:not_equals_operator, text] }
 

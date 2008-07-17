@@ -2,6 +2,11 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_cross_join
+    assert_understands 'SELECT * FROM t1 CROSS JOIN t2'
+    assert_understands 'SELECT * FROM t1 CROSS JOIN t2 CROSS JOIN t3'
+  end
+
   # The expression
   #   SELECT * FROM t1, t2
   # is just syntactic sugar for
