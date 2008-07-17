@@ -80,6 +80,7 @@ class TestParser < Test::Unit::TestCase
 
   def test_count
     assert_understands 'SELECT COUNT(*) FROM users'
+    assert_understands 'SELECT COUNT(id) FROM users'
   end
 
   def test_from_clause

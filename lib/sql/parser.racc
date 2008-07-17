@@ -141,6 +141,10 @@ rule
 
   set_function_specification
     : COUNT left_paren asterisk right_paren { result = SQL::Statement::Count.new(SQL::Statement::All.new) }
+    | general_set_function
+
+  general_set_function
+    : COUNT left_paren value_expression right_paren { result = SQL::Statement::Count.new(val[2]) }
 
 # sql module
   column_name
