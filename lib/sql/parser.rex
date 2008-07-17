@@ -56,6 +56,7 @@ rule
             LEFT        { [:LEFT, text] }
             OUTER       { [:OUTER, text] }
             RIGHT       { [:RIGHT, text] }
+            FULL        { [:FULL, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

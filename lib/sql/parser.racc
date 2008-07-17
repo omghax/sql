@@ -46,6 +46,7 @@ rule
     | LEFT { result = SQL::Statement::LeftJoin }
     | RIGHT OUTER { result = SQL::Statement::RightOuterJoin }
     | RIGHT { result = SQL::Statement::RightJoin }
+    | FULL { result = SQL::Statement::FullJoin }
 
   join_specification
     : join_condition
