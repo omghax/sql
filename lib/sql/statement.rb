@@ -185,6 +185,14 @@ module SQL
     class Equals < ComparisonPredicate
     end
 
+    class Count < Node
+      def initialize(column)
+        @column = column
+      end
+
+      attr_reader :column
+    end
+
     class Table < Node
       def initialize(name)
         @name = name

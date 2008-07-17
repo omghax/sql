@@ -78,6 +78,10 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM users WHERE 1 = 1'
   end
 
+  def test_count
+    assert_understands 'SELECT COUNT(*) FROM users'
+  end
+
   def test_from_clause
     assert_understands 'SELECT 1 FROM users'
     assert_understands 'SELECT id FROM users'

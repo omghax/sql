@@ -125,6 +125,7 @@ rule
   value_expression_primary
     : unsigned_literal
     | column_reference
+    | set_function_specification
     | left_paren value_expression right_paren { result = val[1] }
 
   unsigned_literal
@@ -137,6 +138,9 @@ rule
 
   qualifier
     : table_name
+
+  set_function_specification
+    : COUNT left_paren asterisk right_paren { result = SQL::Statement::Count.new(SQL::Statement::All.new) }
 
 # sql module
   column_name

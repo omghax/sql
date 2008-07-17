@@ -110,6 +110,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql '1 = 1', SQL::Statement::Equals.new(SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(1))
   end
 
+  def test_count
+    assert_sql 'COUNT(*)', SQL::Statement::Count.new(SQL::Statement::All.new)
+  end
+
   def test_table
     assert_sql 'users', SQL::Statement::Table.new('users')
   end

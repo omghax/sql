@@ -41,6 +41,7 @@ rule
             LIKE        { [:LIKE, text] }
             IS          { [:IS, text] }
             NULL        { [:NULL, text] }
+            COUNT       { [:COUNT, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

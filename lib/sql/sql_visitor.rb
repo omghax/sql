@@ -125,6 +125,10 @@ module SQL
       end
     end
 
+    def visit_Count(o)
+      "COUNT(#{visit(o.column)})"
+    end
+
     def visit_Table(o)
       o.name
     end
