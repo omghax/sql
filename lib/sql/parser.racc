@@ -23,16 +23,18 @@ rule
     : from_clause where_clause group_by_clause having_clause { result = SQL::Statement::TableExpression.new(val[0], val[1], val[2], val[3]) }
 
   from_clause
-    : FROM table_reference_list { result = SQL::Statement::FromClause.new(val[1]) }
-
-  # NOTE: this node doesn't exist in the SQL-92 grammar
-  table_reference_list
-    : table_reference_list comma table_reference { result = SQL::Statement::CrossJoin.new(val[0], val[2]) }
-    | table_reference_list CROSS JOIN table_reference { result = SQL::Statement::CrossJoin.new(val[0], val[3]) }
-    | table_reference
+    : FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
 
   table_reference
     : table_name { result = SQL::Statement::Table.new(val[0]) }
+    | joined_table
+
+  joined_table
+    : cross_join
+
+  cross_join
+    : table_reference comma table_name { result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[2])) }
+    | table_reference CROSS JOIN table_name { result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[3])) }
 
   where_clause
     : # no action
