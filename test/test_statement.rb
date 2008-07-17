@@ -28,6 +28,11 @@ class TestStatement < Test::Unit::TestCase
     assert_sql 'FROM users', SQL::Statement::FromClause.new(SQL::Statement::Table.new('users'))
   end
 
+  def test_cross_join
+    assert_sql 't1 CROSS JOIN t2', SQL::Statement::CrossJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'))
+    assert_sql 't1 CROSS JOIN t2 CROSS JOIN t3', SQL::Statement::CrossJoin.new(SQL::Statement::CrossJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2')), SQL::Statement::Table.new('t3'))
+  end
+
   def test_order_clause
     assert_sql 'ORDER BY name DESC', SQL::Statement::OrderClause.new(SQL::Statement::Descending.new(SQL::Statement::Column.new('name')))
     assert_sql 'ORDER BY id ASC, name DESC', SQL::Statement::OrderClause.new([SQL::Statement::Ascending.new(SQL::Statement::Column.new('id')), SQL::Statement::Descending.new(SQL::Statement::Column.new('name'))])

@@ -145,6 +145,10 @@ module SQL
       aggregate('COUNT', o)
     end
 
+    def visit_CrossJoin(o)
+      "#{visit(o.left)} CROSS JOIN #{visit(o.right)}"
+    end
+
     def visit_Table(o)
       o.name
     end

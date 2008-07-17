@@ -2,8 +2,13 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
-  def test_table_reference_list
-    assert_understands 'SELECT * FROM users, posts'
+  # The expression
+  #   SELECT * FROM t1, t2
+  # is just syntactic sugar for
+  #   SELECT * FROM t1 CROSS JOIN t2
+  def test_cross_join_syntactic_sugar
+    assert_sql 'SELECT * FROM t1 CROSS JOIN t2', 'SELECT * FROM t1, t2'
+    assert_sql 'SELECT * FROM t1 CROSS JOIN t2 CROSS JOIN t3', 'SELECT * FROM t1, t2, t3'
   end
 
   def test_having

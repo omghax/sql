@@ -208,6 +208,16 @@ module SQL
     class Count < Aggregate
     end
 
+    class CrossJoin < Node
+      def initialize(left, right)
+        @left = left
+        @right = right
+      end
+
+      attr_reader :left
+      attr_reader :right
+    end
+
     class Table < Node
       def initialize(name)
         @name = name

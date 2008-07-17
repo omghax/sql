@@ -14,12 +14,12 @@ module SQL
 
   class Parser < Racc::Parser
 
-module_eval <<'..end lib/sql/parser.racc modeval..id717f122d71', 'lib/sql/parser.racc', 201
+module_eval <<'..end lib/sql/parser.racc modeval..id21d8b1cb7e', 'lib/sql/parser.racc', 201
 
 def self.parse(sql)
   new.scan_str(sql)
 end
-..end lib/sql/parser.racc modeval..id717f122d71
+..end lib/sql/parser.racc modeval..id21d8b1cb7e
 
 ##### racc 1.4.5 generates ###
 
@@ -600,7 +600,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 25
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 29
   def _reduce_11( val, _values, result )
- result = Array(val[0]) + Array(val[2])
+ result = SQL::Statement::CrossJoin.new(val[0], val[2])
    result
   end
 .,.,
