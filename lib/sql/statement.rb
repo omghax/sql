@@ -242,6 +242,9 @@ module SQL
     class RightJoin < QualifiedJoin
     end
 
+    class RightOuterJoin < QualifiedJoin
+    end
+
     class Table < Node
       def initialize(name)
         @name = name

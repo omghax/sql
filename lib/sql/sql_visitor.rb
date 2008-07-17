@@ -165,6 +165,10 @@ module SQL
       qualified_join('RIGHT', o)
     end
 
+    def visit_RightOuterJoin(o)
+      qualified_join('RIGHT OUTER', o)
+    end
+
     def visit_Table(o)
       o.name
     end
