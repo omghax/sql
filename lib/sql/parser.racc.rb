@@ -14,12 +14,12 @@ module SQL
 
   class Parser < Racc::Parser
 
-module_eval <<'..end lib/sql/parser.racc modeval..id2e762147ed', 'lib/sql/parser.racc', 196
+module_eval <<'..end lib/sql/parser.racc modeval..id8d2fbc8857', 'lib/sql/parser.racc', 196
 
 def self.parse(sql)
   new.scan_str(sql)
 end
-..end lib/sql/parser.racc modeval..id2e762147ed
+..end lib/sql/parser.racc modeval..id8d2fbc8857
 
 ##### racc 1.4.5 generates ###
 
@@ -565,7 +565,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 11
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 14
   def _reduce_5( val, _values, result )
- result = [val[0]] + Array(val[2])
+ result = Array(val[0]) + Array(val[2])
    result
   end
 .,.,
@@ -622,7 +622,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 36
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 39
   def _reduce_16( val, _values, result )
- result = [val[0]] + Array(val[2])
+ result = Array(val[0]) + Array(val[2])
    result
   end
 .,.,
@@ -677,7 +677,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 59
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 62
   def _reduce_26( val, _values, result )
- result = [val[0]] + Array(val[2])
+ result = Array(val[0]) + Array(val[2])
    result
   end
 .,.,

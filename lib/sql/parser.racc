@@ -12,7 +12,7 @@ rule
     | select_sublist { result = SQL::Statement::SelectList.new(val[0]) }
 
   select_sublist
-    : derived_column comma select_sublist { result = [val[0]] + Array(val[2]) }
+    : derived_column comma select_sublist { result = Array(val[0]) + Array(val[2]) }
     | derived_column
 
   derived_column
@@ -37,7 +37,7 @@ rule
     | GROUP BY grouping_column_reference_list { result = SQL::Statement::GroupByClause.new(val[2]) }
 
   grouping_column_reference_list
-    : grouping_column_reference_list comma grouping_column_reference { result = [val[0]] + Array(val[2]) }
+    : grouping_column_reference_list comma grouping_column_reference { result = Array(val[0]) + Array(val[2]) }
     | grouping_column_reference
 
   grouping_column_reference
@@ -60,7 +60,7 @@ rule
     : left_paren in_value_list right_paren { result = val[1] }
 
   in_value_list
-    : value_expression comma in_value_list { result = [val[0]] + Array(val[2]) }
+    : value_expression comma in_value_list { result = Array(val[0]) + Array(val[2]) }
     | value_expression
 
   like_predicate
