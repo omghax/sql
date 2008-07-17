@@ -150,11 +150,15 @@ module SQL
     end
 
     def visit_InnerJoin(o)
-      "#{visit(o.left)} INNER JOIN #{visit(o.right)} ON #{visit(o.search_condition)}"
+      qualified_join('INNER', o)
     end
 
     def visit_LeftJoin(o)
-      "#{visit(o.left)} LEFT JOIN #{visit(o.right)} ON #{visit(o.search_condition)}"
+      qualified_join('LEFT', o)
+    end
+
+    def visit_LeftOuterJoin(o)
+      qualified_join('LEFT OUTER', o)
     end
 
     def visit_Table(o)
@@ -271,6 +275,10 @@ module SQL
 
     def aggregate(function_name, o)
       "#{function_name}(#{visit(o.column)})"
+    end
+
+    def qualified_join(join_type, o)
+      "#{visit(o.left)} #{join_type} JOIN #{visit(o.right)} ON #{visit(o.search_condition)}"
     end
   end
 end

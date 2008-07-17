@@ -54,6 +54,7 @@ rule
             JOIN        { [:JOIN, text] }
             ON          { [:ON, text] }
             LEFT        { [:LEFT, text] }
+            OUTER       { [:OUTER, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

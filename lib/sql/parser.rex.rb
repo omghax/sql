@@ -149,6 +149,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/LEFT/))
            @rex_tokens.push action { [:LEFT, text] }
 
+        when (text = ss.scan(/OUTER/))
+           @rex_tokens.push action { [:OUTER, text] }
+
         when (text = ss.scan(/<>/))
            @rex_tokens.push action { [:not_equals_operator, text] }
 
