@@ -53,6 +53,7 @@ rule
             CROSS       { [:CROSS, text] }
             JOIN        { [:JOIN, text] }
             ON          { [:ON, text] }
+            LEFT        { [:LEFT, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

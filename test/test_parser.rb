@@ -2,6 +2,11 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_left_join
+    assert_understands 'SELECT * FROM t1 LEFT JOIN t2 ON t1.a = t2.a'
+    assert_understands 'SELECT * FROM t1 LEFT JOIN t2 ON t1.a = t2.a LEFT JOIN t3 ON t2.a = t3.a'
+  end
+
   def test_inner_join
     assert_understands 'SELECT * FROM t1 INNER JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 INNER JOIN t2 ON t1.a = t2.a INNER JOIN t3 ON t2.a = t3.a'

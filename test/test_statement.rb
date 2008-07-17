@@ -28,6 +28,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql 'FROM users', SQL::Statement::FromClause.new(SQL::Statement::Table.new('users'))
   end
 
+  def test_left_join
+    assert_sql 't1 LEFT JOIN t2 ON t1.a = t2.a', SQL::Statement::LeftJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+  end
+
   def test_inner_join
     assert_sql 't1 INNER JOIN t2 ON t1.a = t2.a', SQL::Statement::InnerJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
   end

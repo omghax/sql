@@ -153,6 +153,10 @@ module SQL
       "#{visit(o.left)} INNER JOIN #{visit(o.right)} ON #{visit(o.search_condition)}"
     end
 
+    def visit_LeftJoin(o)
+      "#{visit(o.left)} LEFT JOIN #{visit(o.right)} ON #{visit(o.search_condition)}"
+    end
+
     def visit_Table(o)
       o.name
     end

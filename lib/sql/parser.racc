@@ -38,7 +38,11 @@ rule
     | table_reference CROSS JOIN table_name { result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[3])) }
 
   qualified_join
-    : table_reference INNER JOIN table_reference join_specification { result = SQL::Statement::InnerJoin.new(val[0], val[3], val[4]) }
+    : table_reference join_type JOIN table_reference join_specification { result = val[1].new(val[0], val[3], val[4]) }
+
+  join_type
+    : INNER { result = SQL::Statement::InnerJoin }
+    | LEFT { result = SQL::Statement::LeftJoin }
 
   join_specification
     : join_condition
