@@ -113,6 +113,18 @@ class Parser < Racc::Parser
         when (text = ss.scan(/COUNT/))
            @rex_tokens.push action { [:COUNT, text] }
 
+        when (text = ss.scan(/AVG/))
+           @rex_tokens.push action { [:AVG, text] }
+
+        when (text = ss.scan(/MAX/))
+           @rex_tokens.push action { [:MAX, text] }
+
+        when (text = ss.scan(/MIN/))
+           @rex_tokens.push action { [:MIN, text] }
+
+        when (text = ss.scan(/SUM/))
+           @rex_tokens.push action { [:SUM, text] }
+
         when (text = ss.scan(/<>/))
            @rex_tokens.push action { [:not_equals_operator, text] }
 

@@ -185,12 +185,27 @@ module SQL
     class Equals < ComparisonPredicate
     end
 
-    class Count < Node
+    class Aggregate < Node
       def initialize(column)
         @column = column
       end
 
       attr_reader :column
+    end
+
+    class Sum < Aggregate
+    end
+
+    class Minimum < Aggregate
+    end
+
+    class Maximum < Aggregate
+    end
+
+    class Average < Aggregate
+    end
+
+    class Count < Aggregate
     end
 
     class Table < Node

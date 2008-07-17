@@ -110,6 +110,22 @@ class TestStatement < Test::Unit::TestCase
     assert_sql '1 = 1', SQL::Statement::Equals.new(SQL::Statement::Integer.new(1), SQL::Statement::Integer.new(1))
   end
 
+  def test_sum
+    assert_sql 'SUM(messages_count)', SQL::Statement::Sum.new(SQL::Statement::Column.new('messages_count'))
+  end
+
+  def test_minimum
+    assert_sql 'MIN(age)', SQL::Statement::Minimum.new(SQL::Statement::Column.new('age'))
+  end
+
+  def test_maximum
+    assert_sql 'MAX(age)', SQL::Statement::Maximum.new(SQL::Statement::Column.new('age'))
+  end
+
+  def test_average
+    assert_sql 'AVG(age)', SQL::Statement::Average.new(SQL::Statement::Column.new('age'))
+  end
+
   def test_count
     assert_sql 'COUNT(*)', SQL::Statement::Count.new(SQL::Statement::All.new)
   end

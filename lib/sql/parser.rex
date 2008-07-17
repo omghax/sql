@@ -42,6 +42,10 @@ rule
             IS          { [:IS, text] }
             NULL        { [:NULL, text] }
             COUNT       { [:COUNT, text] }
+            AVG         { [:AVG, text] }
+            MAX         { [:MAX, text] }
+            MIN         { [:MIN, text] }
+            SUM         { [:SUM, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

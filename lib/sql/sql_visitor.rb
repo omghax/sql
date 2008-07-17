@@ -125,8 +125,24 @@ module SQL
       end
     end
 
+    def visit_Sum(o)
+      aggregate('SUM', o)
+    end
+
+    def visit_Minimum(o)
+      aggregate('MIN', o)
+    end
+
+    def visit_Maximum(o)
+      aggregate('MAX', o)
+    end
+
+    def visit_Average(o)
+      aggregate('AVG', o)
+    end
+
     def visit_Count(o)
-      "COUNT(#{visit(o.column)})"
+      aggregate('COUNT', o)
     end
 
     def visit_Table(o)
@@ -239,6 +255,10 @@ module SQL
 
     def arrayize(arr)
       visit_all(arr).join(', ')
+    end
+
+    def aggregate(function_name, o)
+      "#{function_name}(#{visit(o.column)})"
     end
   end
 end

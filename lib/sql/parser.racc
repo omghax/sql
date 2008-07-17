@@ -145,6 +145,10 @@ rule
 
   general_set_function
     : COUNT left_paren value_expression right_paren { result = SQL::Statement::Count.new(val[2]) }
+    | AVG left_paren value_expression right_paren { result = SQL::Statement::Average.new(val[2]) }
+    | MAX left_paren value_expression right_paren { result = SQL::Statement::Maximum.new(val[2]) }
+    | MIN left_paren value_expression right_paren { result = SQL::Statement::Minimum.new(val[2]) }
+    | SUM left_paren value_expression right_paren { result = SQL::Statement::Sum.new(val[2]) }
 
 # sql module
   column_name

@@ -78,6 +78,22 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM users WHERE 1 = 1'
   end
 
+  def test_sum
+    assert_understands 'SELECT SUM(messages_count) FROM users'
+  end
+
+  def test_min
+    assert_understands 'SELECT MIN(age) FROM users'
+  end
+
+  def test_max
+    assert_understands 'SELECT MAX(age) FROM users'
+  end
+
+  def test_avg
+    assert_understands 'SELECT AVG(age) FROM users'
+  end
+
   def test_count
     assert_understands 'SELECT COUNT(*) FROM users'
     assert_understands 'SELECT COUNT(id) FROM users'
