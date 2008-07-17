@@ -23,7 +23,12 @@ rule
     : from_clause where_clause group_by_clause having_clause { result = SQL::Statement::TableExpression.new(val[0], val[1], val[2], val[3]) }
 
   from_clause
-    : FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
+    : FROM table_reference_list { result = SQL::Statement::FromClause.new(val[1]) }
+
+  # NOTE: this node doesn't exist in the SQL-92 grammar
+  table_reference_list
+    : table_reference_list comma table_reference { result = Array(val[0]) + Array(val[2]) }
+    | table_reference
 
   table_reference
     : table_name { result = SQL::Statement::Table.new(val[0]) }

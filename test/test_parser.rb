@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_table_reference_list
+    assert_understands 'SELECT * FROM users, posts'
+  end
+
   def test_having
     assert_understands 'SELECT * FROM users HAVING id = 1'
   end
