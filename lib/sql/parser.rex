@@ -77,6 +77,7 @@ rule
             ,           { [:comma, text] }
 
 # identifier
+            `{IDENT}`   { [:identifier, text[1..-2]] }
             {IDENT}     { [:identifier, text] }
 
 ---- header ----

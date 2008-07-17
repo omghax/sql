@@ -193,6 +193,10 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT (1 - 2)'
   end
 
+  def test_quoted_identifier
+    assert_sql 'SELECT a', 'SELECT `a`'
+  end
+
   def test_date
     assert_sql "SELECT DATE '2008-07-11'", 'SELECT DATE "2008-07-11"'
     assert_understands "SELECT DATE '2008-07-11'"
