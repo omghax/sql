@@ -46,6 +46,8 @@ rule
             MAX         { [:MAX, text] }
             MIN         { [:MIN, text] }
             SUM         { [:SUM, text] }
+            GROUP       { [:GROUP, text] }
+            BY          { [:BY, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

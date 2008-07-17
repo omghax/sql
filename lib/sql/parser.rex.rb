@@ -125,6 +125,12 @@ class Parser < Racc::Parser
         when (text = ss.scan(/SUM/))
            @rex_tokens.push action { [:SUM, text] }
 
+        when (text = ss.scan(/GROUP/))
+           @rex_tokens.push action { [:GROUP, text] }
+
+        when (text = ss.scan(/BY/))
+           @rex_tokens.push action { [:BY, text] }
+
         when (text = ss.scan(/<>/))
            @rex_tokens.push action { [:not_equals_operator, text] }
 

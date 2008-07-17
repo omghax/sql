@@ -2,6 +2,13 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_group_by
+    assert_understands 'SELECT * FROM users GROUP BY name'
+    assert_understands 'SELECT * FROM users GROUP BY users.name'
+    assert_understands 'SELECT * FROM users GROUP BY name, id'
+    assert_understands 'SELECT * FROM users GROUP BY users.name, users.id'
+  end
+
   def test_or
     assert_understands 'SELECT * FROM users WHERE (id = 1 OR age = 18)'
   end
