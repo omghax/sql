@@ -28,6 +28,10 @@ class TestStatement < Test::Unit::TestCase
     assert_sql 'FROM users', SQL::Statement::FromClause.new(SQL::Statement::Table.new('users'))
   end
 
+  def test_full_outer_join
+    assert_sql 't1 FULL OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::FullOuterJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+  end
+
   def test_full_join
     assert_sql 't1 FULL JOIN t2 ON t1.a = t2.a', SQL::Statement::FullJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
   end

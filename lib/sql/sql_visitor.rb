@@ -173,6 +173,10 @@ module SQL
       qualified_join('FULL', o)
     end
 
+    def visit_FullOuterJoin(o)
+      qualified_join('FULL OUTER', o)
+    end
+
     def visit_Table(o)
       o.name
     end

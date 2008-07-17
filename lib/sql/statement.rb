@@ -248,6 +248,9 @@ module SQL
     class FullJoin < QualifiedJoin
     end
 
+    class FullOuterJoin < QualifiedJoin
+    end
+
     class Table < Node
       def initialize(name)
         @name = name
