@@ -44,6 +44,7 @@ rule
     : INNER { result = SQL::Statement::InnerJoin }
     | LEFT OUTER { result = SQL::Statement::LeftOuterJoin }
     | LEFT { result = SQL::Statement::LeftJoin }
+    | RIGHT { result = SQL::Statement::RightJoin }
 
   join_specification
     : join_condition
