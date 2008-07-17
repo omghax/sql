@@ -20,7 +20,7 @@ rule
     | value_expression
 
   table_expression
-    : from_clause where_clause group_by_clause { result = SQL::Statement::TableExpression.new(val[0], val[1], val[2]) }
+    : from_clause where_clause group_by_clause having_clause { result = SQL::Statement::TableExpression.new(val[0], val[1], val[2], val[3]) }
 
   from_clause
     : FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
@@ -42,6 +42,10 @@ rule
 
   grouping_column_reference
     : column_reference
+
+  having_clause
+    : # no action
+    | HAVING search_condition { result = SQL::Statement::HavingClause.new(val[1]) }
 
 # query expression components
   between_predicate

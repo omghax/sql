@@ -48,6 +48,7 @@ rule
             SUM         { [:SUM, text] }
             GROUP       { [:GROUP, text] }
             BY          { [:BY, text] }
+            HAVING      { [:HAVING, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

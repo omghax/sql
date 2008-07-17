@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_having
+    assert_understands 'SELECT * FROM users HAVING id = 1'
+  end
+
   def test_group_by
     assert_understands 'SELECT * FROM users GROUP BY name'
     assert_understands 'SELECT * FROM users GROUP BY users.name'
