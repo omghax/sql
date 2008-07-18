@@ -1,8 +1,14 @@
 class SQL::Parser
 
 rule
+  statement
+    : query_specification
 
 # queries
+  subquery
+    # FIXME: shortcut
+    : left_paren query_specification right_paren { result = val[1] }
+
   query_specification
     : SELECT select_list table_expression { result = SQL::Statement::Select.new(val[1], val[2]) }
     | SELECT select_list { result = SQL::Statement::Select.new(val[1]) }
@@ -28,6 +34,9 @@ rule
   table_reference
     : table_name
     | joined_table
+
+  table_subquery
+    : subquery
 
   joined_table
     : cross_join
@@ -108,6 +117,9 @@ rule
     : row_value_constructor IS NOT NULL { result = SQL::Statement::Not.new(SQL::Statement::Is.new(val[0], SQL::Statement::Null.new)) }
     | row_value_constructor IS NULL { result = SQL::Statement::Is.new(val[0], SQL::Statement::Null.new) }
 
+  exists_predicate
+    : EXISTS table_subquery { result = SQL::Statement::Exists.new(val[1]) }
+
 # constraints
   table_name
     : identifier { result = SQL::Statement::Table.new(val[0]) }
@@ -142,6 +154,7 @@ rule
     | in_predicate
     | like_predicate
     | null_predicate
+    | exists_predicate
 
   comparison_predicate
     : row_value_constructor equals_operator row_value_constructor { result = SQL::Statement::Equals.new(val[0], val[2]) }

@@ -155,6 +155,14 @@ module SQL
     class And < SearchCondition
     end
 
+    class Exists < Node
+      def initialize(table_subquery)
+        @table_subquery = table_subquery
+      end
+
+      attr_reader :table_subquery
+    end
+
     class ComparisonPredicate < Node
       def initialize(left, right)
         @left = left

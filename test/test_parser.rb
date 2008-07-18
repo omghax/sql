@@ -95,6 +95,14 @@ class TestParser < Test::Unit::TestCase
     assert_sql "SELECT * FROM users WHERE name NOT LIKE 'A%'", "SELECT * FROM users WHERE NOT name LIKE 'A%'"
   end
 
+  def test_not_exists
+    assert_understands 'SELECT * FROM users WHERE NOT EXISTS (SELECT id FROM users)'
+  end
+
+  def test_exists
+    assert_understands 'SELECT * FROM users WHERE EXISTS (SELECT id FROM users)'
+  end
+
   def test_is_not_null
     assert_understands 'SELECT * FROM users WHERE deleted_at IS NOT NULL'
   end

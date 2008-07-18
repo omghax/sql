@@ -77,6 +77,14 @@ module SQL
       search_condition('AND', o)
     end
 
+    def visit_Exists(o)
+      if @negated
+        "NOT EXISTS (#{visit(o.table_subquery)})"
+      else
+        "EXISTS (#{visit(o.table_subquery)})"
+      end
+    end
+
     def visit_Is(o)
       if @negated
         "#{visit(o.left)} IS NOT #{visit(o.right)}"
