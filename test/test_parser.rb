@@ -10,6 +10,12 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` WHERE `id` > (SELECT SUM(`a`) FROM `t2`)'
   end
 
+  def test_order_by_constant
+    assert_sql 'SELECT * FROM `users` ORDER BY 1 ASC', 'SELECT * FROM users ORDER BY 1'
+    assert_understands 'SELECT * FROM `users` ORDER BY 1 ASC'
+    assert_understands 'SELECT * FROM `users` ORDER BY 1 DESC'
+  end
+
   def test_order
     assert_sql 'SELECT * FROM `users` ORDER BY `name` ASC', 'SELECT * FROM users ORDER BY name'
     assert_understands 'SELECT * FROM `users` ORDER BY `name` ASC'

@@ -25,6 +25,7 @@ rule
 
   sort_key
     : column_name
+    | unsigned_integer { result = SQL::Statement::Integer.new(val[0]) }
 
   ordering_specification
     : { result = SQL::Statement::Ascending } # default
