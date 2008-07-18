@@ -190,7 +190,7 @@ module SQL
     end
 
     def visit_As(o)
-      "#{visit(o.value)} AS #{visit(o.name)}"
+      "#{visit(o.value)} AS #{visit(o.column)}"
     end
 
     def visit_Multiply(o)

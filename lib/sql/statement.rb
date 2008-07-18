@@ -278,13 +278,13 @@ module SQL
     end
 
     class As < Node
-      def initialize(value, name)
+      def initialize(value, column)
         @value = value
-        @name = name
+        @column = column
       end
 
       attr_reader :value
-      attr_reader :name
+      attr_reader :column
     end
 
     class Arithmetic < Node
