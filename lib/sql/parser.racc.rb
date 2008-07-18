@@ -14,12 +14,12 @@ module SQL
 
   class Parser < Racc::Parser
 
-module_eval <<'..end lib/sql/parser.racc modeval..id2e6b32512c', 'lib/sql/parser.racc', 223
+module_eval <<'..end lib/sql/parser.racc modeval..idb11a60ebf3', 'lib/sql/parser.racc', 223
 
 def self.parse(sql)
   new.scan_str(sql)
 end
-..end lib/sql/parser.racc modeval..id2e6b32512c
+..end lib/sql/parser.racc modeval..idb11a60ebf3
 
 ##### racc 1.4.5 generates ###
 
@@ -35,7 +35,7 @@ racc_reduce_table = [
  1, 54, :_reduce_none,
  4, 52, :_reduce_9,
  2, 57, :_reduce_10,
- 1, 61, :_reduce_11,
+ 1, 61, :_reduce_none,
  1, 61, :_reduce_none,
  1, 63, :_reduce_none,
  1, 63, :_reduce_none,
@@ -71,7 +71,7 @@ racc_reduce_table = [
  3, 78, :_reduce_44,
  4, 79, :_reduce_45,
  3, 79, :_reduce_46,
- 1, 62, :_reduce_none,
+ 1, 62, :_reduce_47,
  1, 69, :_reduce_none,
  3, 69, :_reduce_49,
  1, 80, :_reduce_none,
@@ -648,12 +648,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 25
   end
 .,.,
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 28
-  def _reduce_11( val, _values, result )
- result = SQL::Statement::Table.new(val[0])
-   result
-  end
-.,.,
+ # reduce 11 omitted
 
  # reduce 12 omitted
 
@@ -663,14 +658,14 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 28
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 36
   def _reduce_15( val, _values, result )
- result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[2]))
+ result = SQL::Statement::CrossJoin.new(val[0], val[2])
    result
   end
 .,.,
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 37
   def _reduce_16( val, _values, result )
- result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[3]))
+ result = SQL::Statement::CrossJoin.new(val[0], val[3])
    result
   end
 .,.,
@@ -850,7 +845,12 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 101
   end
 .,.,
 
- # reduce 47 omitted
+module_eval <<'.,.,', 'lib/sql/parser.racc', 105
+  def _reduce_47( val, _values, result )
+ result = SQL::Statement::Table.new(val[0])
+   result
+  end
+.,.,
 
  # reduce 48 omitted
 

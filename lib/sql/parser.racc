@@ -26,7 +26,7 @@ rule
     : FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
 
   table_reference
-    : table_name { result = SQL::Statement::Table.new(val[0]) }
+    : table_name
     | joined_table
 
   joined_table
@@ -34,8 +34,8 @@ rule
     | qualified_join
 
   cross_join
-    : table_reference comma table_name { result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[2])) }
-    | table_reference CROSS JOIN table_name { result = SQL::Statement::CrossJoin.new(val[0], SQL::Statement::Table.new(val[3])) }
+    : table_reference comma table_name { result = SQL::Statement::CrossJoin.new(val[0], val[2]) }
+    | table_reference CROSS JOIN table_name { result = SQL::Statement::CrossJoin.new(val[0], val[3]) }
 
   qualified_join
     : table_reference join_type JOIN table_reference join_specification { result = val[1].new(val[0], val[3], val[4]) }
@@ -103,7 +103,7 @@ rule
 
 # constraints
   table_name
-    : identifier
+    : identifier { result = SQL::Statement::Table.new(val[0]) }
 
 # search condition
   search_condition

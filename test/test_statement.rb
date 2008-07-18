@@ -29,31 +29,31 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_full_outer_join
-    assert_sql 't1 FULL OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::FullOuterJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+    assert_sql 't1 FULL OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::FullOuterJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t1'), 'a'), SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t2'), 'a')))
   end
 
   def test_full_join
-    assert_sql 't1 FULL JOIN t2 ON t1.a = t2.a', SQL::Statement::FullJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+    assert_sql 't1 FULL JOIN t2 ON t1.a = t2.a', SQL::Statement::FullJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t1'), 'a'), SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t2'), 'a')))
   end
 
   def test_right_outer_join
-    assert_sql 't1 RIGHT OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::RightOuterJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+    assert_sql 't1 RIGHT OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::RightOuterJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t1'), 'a'), SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t2'), 'a')))
   end
 
   def test_right_join
-    assert_sql 't1 RIGHT JOIN t2 ON t1.a = t2.a', SQL::Statement::RightJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+    assert_sql 't1 RIGHT JOIN t2 ON t1.a = t2.a', SQL::Statement::RightJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t1'), 'a'), SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t2'), 'a')))
   end
 
   def test_left_outer_join
-    assert_sql 't1 LEFT OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::LeftOuterJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+    assert_sql 't1 LEFT OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::LeftOuterJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t1'), 'a'), SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t2'), 'a')))
   end
 
   def test_left_join
-    assert_sql 't1 LEFT JOIN t2 ON t1.a = t2.a', SQL::Statement::LeftJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+    assert_sql 't1 LEFT JOIN t2 ON t1.a = t2.a', SQL::Statement::LeftJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t1'), 'a'), SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t2'), 'a')))
   end
 
   def test_inner_join
-    assert_sql 't1 INNER JOIN t2 ON t1.a = t2.a', SQL::Statement::InnerJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new('t1', 'a'), SQL::Statement::QualifiedColumn.new('t2', 'a')))
+    assert_sql 't1 INNER JOIN t2 ON t1.a = t2.a', SQL::Statement::InnerJoin.new(SQL::Statement::Table.new('t1'), SQL::Statement::Table.new('t2'), SQL::Statement::Equals.new(SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t1'), 'a'), SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('t2'), 'a')))
   end
 
   def test_cross_join
@@ -168,7 +168,7 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_qualified_column
-    assert_sql 'users.id', SQL::Statement::QualifiedColumn.new('users', 'id')
+    assert_sql 'users.id', SQL::Statement::QualifiedColumn.new(SQL::Statement::Table.new('users'), 'id')
   end
 
   def test_column

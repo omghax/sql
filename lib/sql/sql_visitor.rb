@@ -182,7 +182,7 @@ module SQL
     end
 
     def visit_QualifiedColumn(o)
-      "#{o.table}.#{o.name}"
+      "#{visit(o.table)}.#{o.name}"
     end
 
     def visit_Column(o)
