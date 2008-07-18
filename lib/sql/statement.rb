@@ -251,14 +251,6 @@ module SQL
     class FullOuterJoin < QualifiedJoin
     end
 
-    class Table < Node
-      def initialize(name)
-        @name = name
-      end
-
-      attr_reader :name
-    end
-
     class QualifiedColumn < Node
       def initialize(table, column)
         @table = table
@@ -269,12 +261,18 @@ module SQL
       attr_reader :column
     end
 
-    class Column < Node
+    class Identifier < Node
       def initialize(name)
         @name = name
       end
 
       attr_reader :name
+    end
+
+    class Table < Identifier
+    end
+
+    class Column < Identifier
     end
 
     class As < Node
