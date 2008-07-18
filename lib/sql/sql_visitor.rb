@@ -8,6 +8,17 @@ module SQL
       node.accept(self)
     end
 
+    def visit_DirectSelect(o)
+      [
+        o.query_expression,
+        o.order_by
+      ].compact.collect { |e| visit(e) }.join(' ')
+    end
+
+    def visit_OrderBy(o)
+      "ORDER BY #{arrayize(o.sort_specification)}"
+    end
+
     def visit_Subquery(o)
       "(#{visit(o.query_specification)})"
     end

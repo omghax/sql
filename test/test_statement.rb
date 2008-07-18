@@ -2,6 +2,14 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestStatement < Test::Unit::TestCase
+  def test_direct_select
+    assert_sql 'SELECT * FROM `users` ORDER BY `name`', SQL::Statement::DirectSelect.new(select(all, tblx(from(tbl('users')))), SQL::Statement::OrderBy.new(col('name')))
+  end
+
+  def test_order_by
+    assert_sql 'ORDER BY `name`', SQL::Statement::OrderBy.new(col('name'))
+  end
+
   def test_subquery
     assert_sql '(SELECT 1)', SQL::Statement::Subquery.new(select(int(1)))
   end

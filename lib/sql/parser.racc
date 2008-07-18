@@ -1,13 +1,43 @@
 class SQL::Parser
 
 rule
-  statement
-    : query_specification
+# dynamic sql
+  direct_sql_statement
+    : direct_sql_data_statement
+
+  direct_sql_data_statement
+    : direct_select_statement_multiple_rows
+
+  direct_select_statement_multiple_rows
+    : query_expression order_by_clause { result = SQL::Statement::DirectSelect.new(val[0], val[1]) }
+
+# module contents
+  order_by_clause
+    : # no action
+    | ORDER BY sort_specification_list { result = SQL::Statement::OrderBy.new(val[2]) }
+
+  sort_specification_list
+    : sort_specification_list comma sort_specification { result = Array(val[0]) + Array(val[2]) }
+    | sort_specification
+
+  sort_specification
+    : sort_key ordering_specification
+
+  sort_key
+    : column_name
+
+  ordering_specification
+    : # no action
+    # | ASC
+    # | DESC
 
 # queries
   subquery
     # FIXME: shortcut
-    : left_paren query_specification right_paren { result = SQL::Statement::Subquery.new(val[1]) }
+    : left_paren query_expression right_paren { result = SQL::Statement::Subquery.new(val[1]) }
+
+  query_expression
+    : query_specification
 
   query_specification
     : SELECT select_list table_expression { result = SQL::Statement::Select.new(val[1], val[2]) }

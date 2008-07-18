@@ -101,6 +101,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/IN/i))
            @rex_tokens.push action { [:IN, text] }
 
+        when (text = ss.scan(/ORDER/i))
+           @rex_tokens.push action { [:ORDER, text] }
+
         when (text = ss.scan(/OR/i))
            @rex_tokens.push action { [:OR, text] }
 

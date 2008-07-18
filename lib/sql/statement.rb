@@ -26,6 +26,24 @@ module SQL
       end
     end
 
+    class DirectSelect < Node
+      def initialize(query_expression, order_by)
+        @query_expression = query_expression
+        @order_by = order_by
+      end
+
+      attr_reader :query_expression
+      attr_reader :order_by
+    end
+
+    class OrderBy < Node
+      def initialize(sort_specification)
+        @sort_specification = Array(sort_specification)
+      end
+
+      attr_reader :sort_specification
+    end
+
     class Subquery < Node
       def initialize(query_specification)
         @query_specification = query_specification

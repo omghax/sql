@@ -46,6 +46,7 @@ rule
             NOT         { [:NOT, text] }
             INNER       { [:INNER, text] }
             IN          { [:IN, text] }
+            ORDER       { [:ORDER, text] }
             OR          { [:OR, text] }
             LIKE        { [:LIKE, text] }
             IS          { [:IS, text] }
