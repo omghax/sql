@@ -14,12 +14,12 @@ module SQL
 
   class Parser < Racc::Parser
 
-module_eval <<'..end lib/sql/parser.racc modeval..idb11a60ebf3', 'lib/sql/parser.racc', 223
+module_eval <<'..end lib/sql/parser.racc modeval..id47df124798', 'lib/sql/parser.racc', 223
 
 def self.parse(sql)
   new.scan_str(sql)
 end
-..end lib/sql/parser.racc modeval..idb11a60ebf3
+..end lib/sql/parser.racc modeval..id47df124798
 
 ##### racc 1.4.5 generates ###
 
@@ -111,7 +111,7 @@ racc_reduce_table = [
  1, 91, :_reduce_none,
  1, 91, :_reduce_none,
  3, 72, :_reduce_86,
- 1, 72, :_reduce_87,
+ 1, 72, :_reduce_none,
  1, 95, :_reduce_none,
  4, 92, :_reduce_89,
  1, 92, :_reduce_none,
@@ -120,7 +120,7 @@ racc_reduce_table = [
  4, 96, :_reduce_93,
  4, 96, :_reduce_94,
  4, 96, :_reduce_95,
- 1, 56, :_reduce_none,
+ 1, 56, :_reduce_96,
  1, 94, :_reduce_97,
  1, 94, :_reduce_none,
  1, 97, :_reduce_none,
@@ -1020,12 +1020,7 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 177
   end
 .,.,
 
-module_eval <<'.,.,', 'lib/sql/parser.racc', 178
-  def _reduce_87( val, _values, result )
- result = SQL::Statement::Column.new(val[0])
-   result
-  end
-.,.,
+ # reduce 87 omitted
 
  # reduce 88 omitted
 
@@ -1073,7 +1068,12 @@ module_eval <<'.,.,', 'lib/sql/parser.racc', 192
   end
 .,.,
 
- # reduce 96 omitted
+module_eval <<'.,.,', 'lib/sql/parser.racc', 196
+  def _reduce_96( val, _values, result )
+ result = SQL::Statement::Column.new(val[0])
+   result
+  end
+.,.,
 
 module_eval <<'.,.,', 'lib/sql/parser.racc', 200
   def _reduce_97( val, _values, result )

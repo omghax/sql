@@ -176,7 +176,7 @@ rule
 
   column_reference
     : qualifier period column_name { result = SQL::Statement::QualifiedColumn.new(val[0], val[2]) }
-    | column_name { result = SQL::Statement::Column.new(val[0]) }
+    | column_name
 
   qualifier
     : table_name
@@ -194,7 +194,7 @@ rule
 
 # sql module
   column_name
-    : identifier
+    : identifier { result = SQL::Statement::Column.new(val[0]) }
 
 # literals
   general_literal

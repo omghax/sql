@@ -260,13 +260,13 @@ module SQL
     end
 
     class QualifiedColumn < Node
-      def initialize(table, name)
+      def initialize(table, column)
         @table = table
-        @name = name
+        @column = column
       end
 
       attr_reader :table
-      attr_reader :name
+      attr_reader :column
     end
 
     class Column < Node

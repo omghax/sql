@@ -182,7 +182,7 @@ module SQL
     end
 
     def visit_QualifiedColumn(o)
-      "#{visit(o.table)}.#{o.name}"
+      "#{visit(o.table)}.#{visit(o.column)}"
     end
 
     def visit_Column(o)
@@ -190,7 +190,7 @@ module SQL
     end
 
     def visit_As(o)
-      "#{visit(o.value)} AS #{o.name}"
+      "#{visit(o.value)} AS #{visit(o.name)}"
     end
 
     def visit_Multiply(o)
