@@ -100,7 +100,8 @@ rule
     | row_value_constructor IN in_predicate_value { result = SQL::Statement::In.new(val[0], val[2]) }
 
   in_predicate_value
-    : left_paren in_value_list right_paren { result = val[1] }
+    : table_subquery
+    | left_paren in_value_list right_paren { result = SQL::Statement::InValueList.new(val[1]) }
 
   in_value_list
     : value_expression comma in_value_list { result = Array(val[0]) + Array(val[2]) }

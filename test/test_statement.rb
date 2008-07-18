@@ -105,11 +105,11 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_not_in
-    assert_sql '1 NOT IN (1, 2, 3)', SQL::Statement::Not.new(SQL::Statement::In.new(int(1), [int(1), int(2), int(3)]))
+    assert_sql '1 NOT IN (1, 2, 3)', SQL::Statement::Not.new(SQL::Statement::In.new(int(1), SQL::Statement::InValueList.new([int(1), int(2), int(3)])))
   end
 
   def test_in
-    assert_sql '1 IN (1, 2, 3)', SQL::Statement::In.new(int(1), [int(1), int(2), int(3)])
+    assert_sql '1 IN (1, 2, 3)', SQL::Statement::In.new(int(1), SQL::Statement::InValueList.new([int(1), int(2), int(3)]))
   end
 
   def test_not_between

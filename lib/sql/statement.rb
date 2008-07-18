@@ -182,6 +182,14 @@ module SQL
     class In < ComparisonPredicate
     end
 
+    class InValueList < Node
+      def initialize(values)
+        @values = values
+      end
+
+      attr_reader :values
+    end
+
     class Between < Node
       def initialize(left, min, max)
         @left = left

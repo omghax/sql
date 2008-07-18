@@ -124,10 +124,12 @@ class TestParser < Test::Unit::TestCase
 
   def test_not_in
     assert_understands 'SELECT * FROM users WHERE id NOT IN (1, 2, 3)'
+    assert_understands 'SELECT * FROM users WHERE id NOT IN (SELECT id FROM users WHERE age = 18)'
   end
 
   def test_in
     assert_understands 'SELECT * FROM users WHERE id IN (1, 2, 3)'
+    assert_understands 'SELECT * FROM users WHERE id IN (SELECT id FROM users WHERE age = 18)'
   end
 
   def test_not_between

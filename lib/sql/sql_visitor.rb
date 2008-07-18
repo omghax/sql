@@ -106,10 +106,14 @@ module SQL
 
     def visit_In(o)
       if @negated
-        "#{visit(o.left)} NOT IN (#{arrayize(o.right)})"
+        "#{visit(o.left)} NOT IN (#{visit(o.right)})"
       else
-        "#{visit(o.left)} IN (#{arrayize(o.right)})"
+        "#{visit(o.left)} IN (#{visit(o.right)})"
       end
+    end
+
+    def visit_InValueList(o)
+      arrayize(o.values)
     end
 
     def visit_Between(o)
