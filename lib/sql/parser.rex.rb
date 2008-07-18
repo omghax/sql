@@ -53,169 +53,169 @@ class Parser < Racc::Parser
       case state
       when nil
         case
-        when (text = ss.scan(/\"[0-9]+-[0-9]+-[0-9]+\"/))
+        when (text = ss.scan(/\"[0-9]+-[0-9]+-[0-9]+\"/i))
            @rex_tokens.push action { [:date_string, Date.parse(text)] }
 
-        when (text = ss.scan(/\'[0-9]+-[0-9]+-[0-9]+\'/))
+        when (text = ss.scan(/\'[0-9]+-[0-9]+-[0-9]+\'/i))
            @rex_tokens.push action { [:date_string, Date.parse(text)] }
 
-        when (text = ss.scan(/\"[^"]*\"/))
+        when (text = ss.scan(/\"[^"]*\"/i))
            @rex_tokens.push action { [:character_string_literal, text[1..-2]] }
 
-        when (text = ss.scan(/\'[^']*\'/))
+        when (text = ss.scan(/\'[^']*\'/i))
            @rex_tokens.push action { [:character_string_literal, text[1..-2]] }
 
-        when (text = ss.scan(/[0-9]+/))
+        when (text = ss.scan(/[0-9]+/i))
            @rex_tokens.push action { [:unsigned_integer, text.to_i] }
 
-        when (text = ss.scan(/\s+/))
+        when (text = ss.scan(/\s+/i))
           ;
 
-        when (text = ss.scan(/SELECT/))
+        when (text = ss.scan(/SELECT/i))
            @rex_tokens.push action { [:SELECT, text] }
 
-        when (text = ss.scan(/DATE/))
+        when (text = ss.scan(/DATE/i))
            @rex_tokens.push action { [:DATE, text] }
 
-        when (text = ss.scan(/AS/))
+        when (text = ss.scan(/AS/i))
            @rex_tokens.push action { [:AS, text] }
 
-        when (text = ss.scan(/FROM/))
+        when (text = ss.scan(/FROM/i))
            @rex_tokens.push action { [:FROM, text] }
 
-        when (text = ss.scan(/WHERE/))
+        when (text = ss.scan(/WHERE/i))
            @rex_tokens.push action { [:WHERE, text] }
 
-        when (text = ss.scan(/BETWEEN/))
+        when (text = ss.scan(/BETWEEN/i))
            @rex_tokens.push action { [:BETWEEN, text] }
 
-        when (text = ss.scan(/AND/))
+        when (text = ss.scan(/AND/i))
            @rex_tokens.push action { [:AND, text] }
 
-        when (text = ss.scan(/NOT/))
+        when (text = ss.scan(/NOT/i))
            @rex_tokens.push action { [:NOT, text] }
 
-        when (text = ss.scan(/INNER/))
+        when (text = ss.scan(/INNER/i))
            @rex_tokens.push action { [:INNER, text] }
 
-        when (text = ss.scan(/IN/))
+        when (text = ss.scan(/IN/i))
            @rex_tokens.push action { [:IN, text] }
 
-        when (text = ss.scan(/OR/))
+        when (text = ss.scan(/OR/i))
            @rex_tokens.push action { [:OR, text] }
 
-        when (text = ss.scan(/LIKE/))
+        when (text = ss.scan(/LIKE/i))
            @rex_tokens.push action { [:LIKE, text] }
 
-        when (text = ss.scan(/IS/))
+        when (text = ss.scan(/IS/i))
            @rex_tokens.push action { [:IS, text] }
 
-        when (text = ss.scan(/NULL/))
+        when (text = ss.scan(/NULL/i))
            @rex_tokens.push action { [:NULL, text] }
 
-        when (text = ss.scan(/COUNT/))
+        when (text = ss.scan(/COUNT/i))
            @rex_tokens.push action { [:COUNT, text] }
 
-        when (text = ss.scan(/AVG/))
+        when (text = ss.scan(/AVG/i))
            @rex_tokens.push action { [:AVG, text] }
 
-        when (text = ss.scan(/MAX/))
+        when (text = ss.scan(/MAX/i))
            @rex_tokens.push action { [:MAX, text] }
 
-        when (text = ss.scan(/MIN/))
+        when (text = ss.scan(/MIN/i))
            @rex_tokens.push action { [:MIN, text] }
 
-        when (text = ss.scan(/SUM/))
+        when (text = ss.scan(/SUM/i))
            @rex_tokens.push action { [:SUM, text] }
 
-        when (text = ss.scan(/GROUP/))
+        when (text = ss.scan(/GROUP/i))
            @rex_tokens.push action { [:GROUP, text] }
 
-        when (text = ss.scan(/BY/))
+        when (text = ss.scan(/BY/i))
            @rex_tokens.push action { [:BY, text] }
 
-        when (text = ss.scan(/HAVING/))
+        when (text = ss.scan(/HAVING/i))
            @rex_tokens.push action { [:HAVING, text] }
 
-        when (text = ss.scan(/CROSS/))
+        when (text = ss.scan(/CROSS/i))
            @rex_tokens.push action { [:CROSS, text] }
 
-        when (text = ss.scan(/JOIN/))
+        when (text = ss.scan(/JOIN/i))
            @rex_tokens.push action { [:JOIN, text] }
 
-        when (text = ss.scan(/ON/))
+        when (text = ss.scan(/ON/i))
            @rex_tokens.push action { [:ON, text] }
 
-        when (text = ss.scan(/LEFT/))
+        when (text = ss.scan(/LEFT/i))
            @rex_tokens.push action { [:LEFT, text] }
 
-        when (text = ss.scan(/OUTER/))
+        when (text = ss.scan(/OUTER/i))
            @rex_tokens.push action { [:OUTER, text] }
 
-        when (text = ss.scan(/RIGHT/))
+        when (text = ss.scan(/RIGHT/i))
            @rex_tokens.push action { [:RIGHT, text] }
 
-        when (text = ss.scan(/FULL/))
+        when (text = ss.scan(/FULL/i))
            @rex_tokens.push action { [:FULL, text] }
 
-        when (text = ss.scan(/USING/))
+        when (text = ss.scan(/USING/i))
            @rex_tokens.push action { [:USING, text] }
 
-        when (text = ss.scan(/<>/))
+        when (text = ss.scan(/<>/i))
            @rex_tokens.push action { [:not_equals_operator, text] }
 
-        when (text = ss.scan(/!=/))
+        when (text = ss.scan(/!=/i))
            @rex_tokens.push action { [:not_equals_operator, text] }
 
-        when (text = ss.scan(/=/))
+        when (text = ss.scan(/=/i))
            @rex_tokens.push action { [:equals_operator, text] }
 
-        when (text = ss.scan(/<=/))
+        when (text = ss.scan(/<=/i))
            @rex_tokens.push action { [:less_than_or_equals_operator, text] }
 
-        when (text = ss.scan(/</))
+        when (text = ss.scan(/</i))
            @rex_tokens.push action { [:less_than_operator, text] }
 
-        when (text = ss.scan(/>=/))
+        when (text = ss.scan(/>=/i))
            @rex_tokens.push action { [:greater_than_or_equals_operator, text] }
 
-        when (text = ss.scan(/>/))
+        when (text = ss.scan(/>/i))
            @rex_tokens.push action { [:greater_than_operator, text] }
 
-        when (text = ss.scan(/\(/))
+        when (text = ss.scan(/\(/i))
            @rex_tokens.push action { [:left_paren, text] }
 
-        when (text = ss.scan(/\)/))
+        when (text = ss.scan(/\)/i))
            @rex_tokens.push action { [:right_paren, text] }
 
-        when (text = ss.scan(/\*/))
+        when (text = ss.scan(/\*/i))
            @rex_tokens.push action { [:asterisk, text] }
 
-        when (text = ss.scan(/\//))
+        when (text = ss.scan(/\//i))
            @rex_tokens.push action { [:solidus, text] }
 
-        when (text = ss.scan(/\+/))
+        when (text = ss.scan(/\+/i))
            @rex_tokens.push action { [:plus_sign, text] }
 
-        when (text = ss.scan(/\-/))
+        when (text = ss.scan(/\-/i))
            @rex_tokens.push action { [:minus_sign, text] }
 
-        when (text = ss.scan(/\./))
+        when (text = ss.scan(/\./i))
            @rex_tokens.push action { [:period, text] }
 
-        when (text = ss.scan(/,/))
+        when (text = ss.scan(/,/i))
            @rex_tokens.push action { [:comma, text] }
 
-        when (text = ss.scan(/`\w+`/))
+        when (text = ss.scan(/`\w+`/i))
            @rex_tokens.push action { [:identifier, text[1..-2]] }
 
-        when (text = ss.scan(/\w+/))
+        when (text = ss.scan(/\w+/i))
            @rex_tokens.push action { [:identifier, text] }
 
-        when (text = ss.scan(/----/))
+        when (text = ss.scan(/----/i))
           ;
 
-        when (text = ss.scan(/require/))
+        when (text = ss.scan(/require/i))
           ;
 
         else

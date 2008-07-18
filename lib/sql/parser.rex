@@ -1,5 +1,8 @@
 class SQL::Parser
 
+option
+  ignorecase
+
 macro
   DIGIT   [0-9]
   UINT    {DIGIT}+

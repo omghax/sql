@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestParser < Test::Unit::TestCase
+  def test_case_insensitivity
+    assert_sql 'SELECT * FROM users WHERE id = 1', 'select * from users where id = 1'
+  end
+
   def test_full_outer_join
     assert_understands 'SELECT * FROM t1 FULL OUTER JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 FULL OUTER JOIN t2 ON t1.a = t2.a FULL OUTER JOIN t3 ON t2.a = t3.a'
