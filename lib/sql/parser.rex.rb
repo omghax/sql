@@ -77,6 +77,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/DATE/i))
            @rex_tokens.push action { [:DATE, text] }
 
+        when (text = ss.scan(/ASC/i))
+           @rex_tokens.push action { [:ASC, text] }
+
         when (text = ss.scan(/AS/i))
            @rex_tokens.push action { [:AS, text] }
 
@@ -166,6 +169,9 @@ class Parser < Racc::Parser
 
         when (text = ss.scan(/EXISTS/i))
            @rex_tokens.push action { [:EXISTS, text] }
+
+        when (text = ss.scan(/DESC/i))
+           @rex_tokens.push action { [:DESC, text] }
 
         when (text = ss.scan(/<>/i))
            @rex_tokens.push action { [:not_equals_operator, text] }

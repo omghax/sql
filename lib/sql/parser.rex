@@ -38,6 +38,7 @@ rule
 # keywords
             SELECT      { [:SELECT, text] }
             DATE        { [:DATE, text] }
+            ASC         { [:ASC, text] }
             AS          { [:AS, text] }
             FROM        { [:FROM, text] }
             WHERE       { [:WHERE, text] }
@@ -68,6 +69,7 @@ rule
             FULL        { [:FULL, text] }
             USING       { [:USING, text] }
             EXISTS      { [:EXISTS, text] }
+            DESC        { [:DESC, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

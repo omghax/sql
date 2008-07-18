@@ -21,15 +21,15 @@ rule
     | sort_specification
 
   sort_specification
-    : sort_key ordering_specification
+    : sort_key ordering_specification { result = val[1].new(val[0]) }
 
   sort_key
     : column_name
 
   ordering_specification
-    : # no action
-    # | ASC
-    # | DESC
+    : { result = SQL::Statement::Ascending } # default
+    | ASC { result = SQL::Statement::Ascending }
+    | DESC { result = SQL::Statement::Descending }
 
 # queries
   subquery
