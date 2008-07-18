@@ -2,6 +2,10 @@ require File.dirname(__FILE__) + '/../lib/sql'
 require 'test/unit'
 
 class TestStatement < Test::Unit::TestCase
+  def test_subquery
+    assert_sql '(SELECT 1)', SQL::Statement::Subquery.new(select(int(1)))
+  end
+
   def test_select
     assert_sql 'SELECT 1', select(int(1))
     assert_sql 'SELECT * FROM `users`', select(all, tblx(from(tbl('users'))))

@@ -26,6 +26,14 @@ module SQL
       end
     end
 
+    class Subquery < Node
+      def initialize(query_specification)
+        @query_specification = query_specification
+      end
+
+      attr_reader :query_specification
+    end
+
     class Select < Node
       def initialize(list, table_expression = nil)
         @list = list

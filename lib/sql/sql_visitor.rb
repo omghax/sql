@@ -8,6 +8,10 @@ module SQL
       node.accept(self)
     end
 
+    def visit_Subquery(o)
+      "(#{visit(o.query_specification)})"
+    end
+
     def visit_Select(o)
       # FIXME: This feels like a hack
       initialize
@@ -82,17 +86,17 @@ module SQL
 
     def visit_Exists(o)
       if @negated
-        "NOT EXISTS (#{visit(o.table_subquery)})"
+        "NOT EXISTS #{visit(o.table_subquery)}"
       else
-        "EXISTS (#{visit(o.table_subquery)})"
+        "EXISTS #{visit(o.table_subquery)}"
       end
     end
 
     def visit_Is(o)
       if @negated
-        "#{visit(o.left)} IS NOT #{visit(o.right)}"
+        comparison('IS NOT', o)
       else
-        "#{visit(o.left)} IS #{visit(o.right)}"
+        comparison('IS', o)
       end
     end
 
@@ -106,14 +110,14 @@ module SQL
 
     def visit_In(o)
       if @negated
-        "#{visit(o.left)} NOT IN (#{visit(o.right)})"
+        comparison('NOT IN', o)
       else
-        "#{visit(o.left)} IN (#{visit(o.right)})"
+        comparison('IN', o)
       end
     end
 
     def visit_InValueList(o)
-      arrayize(o.values)
+      "(#{arrayize(o.values)})"
     end
 
     def visit_Between(o)

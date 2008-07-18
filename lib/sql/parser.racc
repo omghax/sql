@@ -7,7 +7,7 @@ rule
 # queries
   subquery
     # FIXME: shortcut
-    : left_paren query_specification right_paren { result = val[1] }
+    : left_paren query_specification right_paren { result = SQL::Statement::Subquery.new(val[1]) }
 
   query_specification
     : SELECT select_list table_expression { result = SQL::Statement::Select.new(val[1], val[2]) }
@@ -94,6 +94,9 @@ rule
     | HAVING search_condition { result = SQL::Statement::HavingClause.new(val[1]) }
 
 # query expression components
+  row_subquery
+    : subquery
+
   between_predicate
     : row_value_constructor NOT BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Not.new(SQL::Statement::Between.new(val[0], val[3], val[5])) }
     | row_value_constructor BETWEEN row_value_constructor AND row_value_constructor { result = SQL::Statement::Between.new(val[0], val[2], val[4]) }
@@ -170,6 +173,7 @@ rule
 
   row_value_constructor
     : row_value_constructor_element
+    | row_subquery
 
   row_value_constructor_element
     : value_expression
