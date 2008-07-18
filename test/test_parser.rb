@@ -5,36 +5,50 @@ class TestParser < Test::Unit::TestCase
   def test_full_outer_join
     assert_understands 'SELECT * FROM t1 FULL OUTER JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 FULL OUTER JOIN t2 ON t1.a = t2.a FULL OUTER JOIN t3 ON t2.a = t3.a'
+    assert_understands 'SELECT * FROM t1 FULL OUTER JOIN t2 USING (a)'
+    assert_understands 'SELECT * FROM t1 FULL OUTER JOIN t2 USING (a) FULL OUTER JOIN t3 USING (b)'
   end
 
   def test_full_join
     assert_understands 'SELECT * FROM t1 FULL JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 FULL JOIN t2 ON t1.a = t2.a FULL JOIN t3 ON t2.a = t3.a'
+    assert_understands 'SELECT * FROM t1 FULL JOIN t2 USING (a)'
+    assert_understands 'SELECT * FROM t1 FULL JOIN t2 USING (a) FULL JOIN t3 USING (b)'
   end
 
   def test_right_outer_join
     assert_understands 'SELECT * FROM t1 RIGHT OUTER JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 RIGHT OUTER JOIN t2 ON t1.a = t2.a RIGHT OUTER JOIN t3 ON t2.a = t3.a'
+    assert_understands 'SELECT * FROM t1 RIGHT OUTER JOIN t2 USING (a)'
+    assert_understands 'SELECT * FROM t1 RIGHT OUTER JOIN t2 USING (a) RIGHT OUTER JOIN t3 USING (b)'
   end
 
   def test_right_join
     assert_understands 'SELECT * FROM t1 RIGHT JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 RIGHT JOIN t2 ON t1.a = t2.a RIGHT JOIN t3 ON t2.a = t3.a'
+    assert_understands 'SELECT * FROM t1 RIGHT JOIN t2 USING (a)'
+    assert_understands 'SELECT * FROM t1 RIGHT JOIN t2 USING (a) RIGHT JOIN t3 USING (b)'
   end
 
   def test_left_outer_join
     assert_understands 'SELECT * FROM t1 LEFT OUTER JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 LEFT OUTER JOIN t2 ON t1.a = t2.a LEFT OUTER JOIN t3 ON t2.a = t3.a'
+    assert_understands 'SELECT * FROM t1 LEFT OUTER JOIN t2 USING (a)'
+    assert_understands 'SELECT * FROM t1 LEFT OUTER JOIN t2 USING (a) LEFT OUTER JOIN t3 USING (b)'
   end
 
   def test_left_join
     assert_understands 'SELECT * FROM t1 LEFT JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 LEFT JOIN t2 ON t1.a = t2.a LEFT JOIN t3 ON t2.a = t3.a'
+    assert_understands 'SELECT * FROM t1 LEFT JOIN t2 USING (a)'
+    assert_understands 'SELECT * FROM t1 LEFT JOIN t2 USING (a) LEFT JOIN t3 USING (b)'
   end
 
   def test_inner_join
     assert_understands 'SELECT * FROM t1 INNER JOIN t2 ON t1.a = t2.a'
     assert_understands 'SELECT * FROM t1 INNER JOIN t2 ON t1.a = t2.a INNER JOIN t3 ON t2.a = t3.a'
+    assert_understands 'SELECT * FROM t1 INNER JOIN t2 USING (a)'
+    assert_understands 'SELECT * FROM t1 INNER JOIN t2 USING (a) INNER JOIN t3 USING (b)'
   end
 
   def test_cross_join

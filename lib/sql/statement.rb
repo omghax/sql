@@ -123,6 +123,14 @@ module SQL
       attr_reader :search_condition
     end
 
+    class On < Node
+      def initialize(search_condition)
+        @search_condition = search_condition
+      end
+
+      attr_reader :search_condition
+    end
+
     class SearchCondition < Node
       def initialize(left, right)
         @left = left
@@ -131,6 +139,14 @@ module SQL
 
       attr_reader :left
       attr_reader :right
+    end
+
+    class Using < Node
+      def initialize(columns)
+        @columns = Array(columns)
+      end
+
+      attr_reader :columns
     end
 
     class Or < SearchCondition

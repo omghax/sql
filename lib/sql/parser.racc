@@ -51,9 +51,16 @@ rule
 
   join_specification
     : join_condition
+    | named_columns_join
 
   join_condition
-    : ON search_condition { result = val[1] }
+    : ON search_condition { result = SQL::Statement::On.new(val[1]) }
+
+  named_columns_join
+    : USING left_paren join_column_list right_paren { result = SQL::Statement::Using.new(val[2]) }
+
+  join_column_list
+    : column_name_list
 
   where_clause
     : # no action
@@ -104,6 +111,10 @@ rule
 # constraints
   table_name
     : identifier { result = SQL::Statement::Table.new(val[0]) }
+
+  column_name_list
+    : column_name_list comma column_name { result = Array(val[0]) + Array(val[2]) }
+    | column_name
 
 # search condition
   search_condition

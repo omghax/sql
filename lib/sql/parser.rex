@@ -57,6 +57,7 @@ rule
             OUTER       { [:OUTER, text] }
             RIGHT       { [:RIGHT, text] }
             FULL        { [:FULL, text] }
+            USING       { [:USING, text] }
 
 # tokens
             <>          { [:not_equals_operator, text] }

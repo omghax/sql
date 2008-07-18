@@ -61,6 +61,14 @@ module SQL
       "WHERE #{visit(o.search_condition)}"
     end
 
+    def visit_On(o)
+      "ON #{visit(o.search_condition)}"
+    end
+
+    def visit_Using(o)
+      "USING (#{arrayize(o.columns)})"
+    end
+
     def visit_Or(o)
       search_condition('OR', o)
     end
@@ -294,7 +302,7 @@ module SQL
     end
 
     def qualified_join(join_type, o)
-      "#{visit(o.left)} #{join_type} JOIN #{visit(o.right)} ON #{visit(o.search_condition)}"
+      "#{visit(o.left)} #{join_type} JOIN #{visit(o.right)} #{visit(o.search_condition)}"
     end
   end
 end
