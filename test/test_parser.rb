@@ -93,6 +93,9 @@ class TestParser < Test::Unit::TestCase
     assert_sql 'SELECT * FROM users WHERE id NOT IN (1, 2, 3)', 'SELECT * FROM users WHERE NOT id IN (1, 2, 3)'
     assert_sql 'SELECT * FROM users WHERE id NOT BETWEEN 1 AND 3', 'SELECT * FROM users WHERE NOT id BETWEEN 1 AND 3'
     assert_sql "SELECT * FROM users WHERE name NOT LIKE 'A%'", "SELECT * FROM users WHERE NOT name LIKE 'A%'"
+
+    # Shouldn't negate subqueries
+    assert_understands 'SELECT * FROM users WHERE NOT EXISTS (SELECT id FROM users WHERE id = 1)'
   end
 
   def test_not_exists

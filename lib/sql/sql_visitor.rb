@@ -9,6 +9,9 @@ module SQL
     end
 
     def visit_Select(o)
+      # FIXME: This feels like a hack
+      initialize
+
       "SELECT #{visit_all([o.list, o.table_expression].compact).join(' ')}"
     end
 
