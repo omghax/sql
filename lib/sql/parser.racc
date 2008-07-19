@@ -23,6 +23,7 @@ rule
 
   derived_column
     : value_expression AS column_name { result = SQL::Statement::As.new(val[0], val[2]) }
+    | value_expression column_name { result = SQL::Statement::As.new(val[0], val[1]) }
     | value_expression
 
   table_expression
@@ -32,7 +33,9 @@ rule
     : FROM table_reference { result = SQL::Statement::FromClause.new(val[1]) }
 
   table_reference
-    : table_name
+    : table_name AS column_name { result = SQL::Statement::As.new(val[0], val[2]) }
+    | table_name column_name { result = SQL::Statement::As.new(val[0], val[1]) }
+    | table_name
     | joined_table
 
   table_subquery

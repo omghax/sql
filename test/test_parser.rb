@@ -206,7 +206,13 @@ class TestParser < Test::Unit::TestCase
 
   def test_as
     assert_understands 'SELECT 1 AS `x`'
+    assert_sql 'SELECT 1 AS `x`', 'SELECT 1 x'
+
     assert_understands 'SELECT (1 + 1) AS `y`'
+    assert_sql 'SELECT (1 + 1) AS `y`', 'SELECT (1 + 1) y'
+
+    assert_understands 'SELECT * FROM `users` AS `u`'
+    assert_sql 'SELECT * FROM `users` AS `u`', 'SELECT * FROM users u'
   end
 
   def test_parentheses
