@@ -201,7 +201,7 @@ module SQL
     end
 
     def visit_Table(o)
-      o.name
+      quote(o.name)
     end
 
     def visit_QualifiedColumn(o)
@@ -209,7 +209,7 @@ module SQL
     end
 
     def visit_Column(o)
-      o.name
+      quote(o.name)
     end
 
     def visit_As(o)
@@ -257,15 +257,15 @@ module SQL
     end
 
     def visit_DateTime(o)
-      "'%s'" % quote(o.value.strftime('%Y-%m-%d %H:%M:%S'))
+      "'%s'" % escape(o.value.strftime('%Y-%m-%d %H:%M:%S'))
     end
 
     def visit_Date(o)
-      "DATE '%s'" % quote(o.value.strftime('%Y-%m-%d'))
+      "DATE '%s'" % escape(o.value.strftime('%Y-%m-%d'))
     end
 
     def visit_String(o)
-      "'%s'" % quote(o.value)
+      "'%s'" % escape(o.value)
     end
 
     def visit_Float(o)
@@ -286,6 +286,10 @@ module SQL
     end
 
     def quote(str)
+      "`#{str}`"
+    end
+
+    def escape(str)
       str.gsub(/'/, "''")
     end
 

@@ -4,16 +4,16 @@ require 'test/unit'
 class TestStatement < Test::Unit::TestCase
   def test_select
     assert_sql 'SELECT 1', select(int(1))
-    assert_sql 'SELECT * FROM users', select(all, tblx(from(tbl('users'))))
+    assert_sql 'SELECT * FROM `users`', select(all, tblx(from(tbl('users'))))
   end
 
   def test_select_list
-    assert_sql 'id', slist(col('id'))
-    assert_sql 'id, name', slist([col('id'), col('name')])
+    assert_sql '`id`', slist(col('id'))
+    assert_sql '`id`, `name`', slist([col('id'), col('name')])
   end
 
   def test_distinct
-    assert_sql 'DISTINCT(username)', distinct(col('username'))
+    assert_sql 'DISTINCT(`username`)', distinct(col('username'))
   end
 
   def test_all
@@ -21,59 +21,59 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_table_expression
-    assert_sql 'FROM users WHERE id = 1 GROUP BY name', tblx(from(tbl('users')), where(equals(col('id'), int(1))), group_by(col('name')))
+    assert_sql 'FROM `users` WHERE `id` = 1 GROUP BY `name`', tblx(from(tbl('users')), where(equals(col('id'), int(1))), group_by(col('name')))
   end
 
   def test_from_clause
-    assert_sql 'FROM users', from(tbl('users'))
+    assert_sql 'FROM `users`', from(tbl('users'))
   end
 
   def test_full_outer_join
-    assert_sql 't1 FULL OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::FullOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
-    assert_sql 't1 FULL OUTER JOIN t2 USING (a)', SQL::Statement::FullOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::Using.new(col('a')))
+    assert_sql '`t1` FULL OUTER JOIN `t2` ON `t1`.`a` = `t2`.`a`', SQL::Statement::FullOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
+    assert_sql '`t1` FULL OUTER JOIN `t2` USING (`a`)', SQL::Statement::FullOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::Using.new(col('a')))
   end
 
   def test_full_join
-    assert_sql 't1 FULL JOIN t2 ON t1.a = t2.a', SQL::Statement::FullJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
+    assert_sql '`t1` FULL JOIN `t2` ON `t1`.`a` = `t2`.`a`', SQL::Statement::FullJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
   end
 
   def test_right_outer_join
-    assert_sql 't1 RIGHT OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::RightOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
+    assert_sql '`t1` RIGHT OUTER JOIN `t2` ON `t1`.`a` = `t2`.`a`', SQL::Statement::RightOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
   end
 
   def test_right_join
-    assert_sql 't1 RIGHT JOIN t2 ON t1.a = t2.a', SQL::Statement::RightJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
+    assert_sql '`t1` RIGHT JOIN `t2` ON `t1`.`a` = `t2`.`a`', SQL::Statement::RightJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
   end
 
   def test_left_outer_join
-    assert_sql 't1 LEFT OUTER JOIN t2 ON t1.a = t2.a', SQL::Statement::LeftOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
+    assert_sql '`t1` LEFT OUTER JOIN `t2` ON `t1`.`a` = `t2`.`a`', SQL::Statement::LeftOuterJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
   end
 
   def test_left_join
-    assert_sql 't1 LEFT JOIN t2 ON t1.a = t2.a', SQL::Statement::LeftJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
+    assert_sql '`t1` LEFT JOIN `t2` ON `t1`.`a` = `t2`.`a`', SQL::Statement::LeftJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
   end
 
   def test_inner_join
-    assert_sql 't1 INNER JOIN t2 ON t1.a = t2.a', SQL::Statement::InnerJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
+    assert_sql '`t1` INNER JOIN `t2` ON `t1`.`a` = `t2`.`a`', SQL::Statement::InnerJoin.new(tbl('t1'), tbl('t2'), SQL::Statement::On.new(equals(qcol(tbl('t1'), col('a')), qcol(tbl('t2'), col('a')))))
   end
 
   def test_cross_join
-    assert_sql 't1 CROSS JOIN t2', SQL::Statement::CrossJoin.new(tbl('t1'), tbl('t2'))
-    assert_sql 't1 CROSS JOIN t2 CROSS JOIN t3', SQL::Statement::CrossJoin.new(SQL::Statement::CrossJoin.new(tbl('t1'), tbl('t2')), tbl('t3'))
+    assert_sql '`t1` CROSS JOIN `t2`', SQL::Statement::CrossJoin.new(tbl('t1'), tbl('t2'))
+    assert_sql '`t1` CROSS JOIN `t2` CROSS JOIN `t3`', SQL::Statement::CrossJoin.new(SQL::Statement::CrossJoin.new(tbl('t1'), tbl('t2')), tbl('t3'))
   end
 
   def test_order_clause
-    assert_sql 'ORDER BY name DESC', SQL::Statement::OrderClause.new(SQL::Statement::Descending.new(col('name')))
-    assert_sql 'ORDER BY id ASC, name DESC', SQL::Statement::OrderClause.new([SQL::Statement::Ascending.new(col('id')), SQL::Statement::Descending.new(col('name'))])
+    assert_sql 'ORDER BY `name` DESC', SQL::Statement::OrderClause.new(SQL::Statement::Descending.new(col('name')))
+    assert_sql 'ORDER BY `id` ASC, `name` DESC', SQL::Statement::OrderClause.new([SQL::Statement::Ascending.new(col('id')), SQL::Statement::Descending.new(col('name'))])
   end
 
   def test_having_clause
-    assert_sql 'HAVING id = 1', SQL::Statement::HavingClause.new(equals(col('id'), int(1)))
+    assert_sql 'HAVING `id` = 1', SQL::Statement::HavingClause.new(equals(col('id'), int(1)))
   end
 
   def test_group_by_clause
-    assert_sql 'GROUP BY name', group_by(col('name'))
-    assert_sql 'GROUP BY name, status', group_by([col('name'), col('status')])
+    assert_sql 'GROUP BY `name`', group_by(col('name'))
+    assert_sql 'GROUP BY `name`, `status`', group_by([col('name'), col('status')])
   end
 
   def test_where_clause
@@ -145,19 +145,19 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_sum
-    assert_sql 'SUM(messages_count)', SQL::Statement::Sum.new(col('messages_count'))
+    assert_sql 'SUM(`messages_count`)', SQL::Statement::Sum.new(col('messages_count'))
   end
 
   def test_minimum
-    assert_sql 'MIN(age)', SQL::Statement::Minimum.new(col('age'))
+    assert_sql 'MIN(`age`)', SQL::Statement::Minimum.new(col('age'))
   end
 
   def test_maximum
-    assert_sql 'MAX(age)', SQL::Statement::Maximum.new(col('age'))
+    assert_sql 'MAX(`age`)', SQL::Statement::Maximum.new(col('age'))
   end
 
   def test_average
-    assert_sql 'AVG(age)', SQL::Statement::Average.new(col('age'))
+    assert_sql 'AVG(`age`)', SQL::Statement::Average.new(col('age'))
   end
 
   def test_count
@@ -165,19 +165,19 @@ class TestStatement < Test::Unit::TestCase
   end
 
   def test_table
-    assert_sql 'users', tbl('users')
+    assert_sql '`users`', tbl('users')
   end
 
   def test_qualified_column
-    assert_sql 'users.id', qcol(tbl('users'), col('id'))
+    assert_sql '`users`.`id`', qcol(tbl('users'), col('id'))
   end
 
   def test_column
-    assert_sql 'id', col('id')
+    assert_sql '`id`', col('id')
   end
 
   def test_as
-    assert_sql '1 AS a', SQL::Statement::As.new(int(1), col('a'))
+    assert_sql '1 AS `a`', SQL::Statement::As.new(int(1), col('a'))
   end
 
   def test_multiply
