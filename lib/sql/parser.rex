@@ -22,8 +22,13 @@ rule
             \"{DATE}\"  { [:date_string, Date.parse(text)] }
             \'{DATE}\'  { [:date_string, Date.parse(text)] }
 
-            \"[^"]*\"   { [:character_string_literal, text[1..-2]] }
-            \'[^']*\'   { [:character_string_literal, text[1..-2]] }
+            \'          { state = :STRS;  [:quote, text] }
+  :STRS     \'          { state = nil;    [:quote, text] }
+  :STRS     .*(?=\')    {                 [:character_string_literal, text.gsub("''", "'")] }
+
+            \"          { state = :STRD;  [:quote, text] }
+  :STRD     \"          { state = nil;    [:quote, text] }
+  :STRD     .*(?=\")    {                 [:character_string_literal, text.gsub('""', '"')] }
 
             {UINT}      { [:unsigned_integer, text.to_i] }
 

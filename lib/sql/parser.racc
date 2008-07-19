@@ -223,7 +223,8 @@ rule
 
 # literals
   general_literal
-    : character_string_literal { result = SQL::Statement::String.new(val[0]) }
+    : quote character_string_literal quote { result = SQL::Statement::String.new(val[1]) }
+    | quote quote { result = SQL::Statement::String.new('') }
     | datetime_literal
 
   datetime_literal

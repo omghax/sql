@@ -233,6 +233,18 @@ class TestParser < Test::Unit::TestCase
     assert_understands "SELECT DATE '2008-07-11'"
   end
 
+  def test_quoting
+    assert_sql %{SELECT ''}, %{SELECT ""}
+    assert_understands %{SELECT ''}
+
+    assert_sql %{SELECT 'Quote "this"'}, %{SELECT "Quote ""this"""}
+    assert_understands %{SELECT 'Quote ''this!'''}
+
+    # # FIXME
+    # assert_sql %{SELECT '"'}, %{SELECT """"}
+    # assert_understands %{SELECT ''''}
+  end
+
   def test_string
     assert_sql "SELECT 'abc'", 'SELECT "abc"'
     assert_understands "SELECT 'abc'"

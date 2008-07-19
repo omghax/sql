@@ -59,11 +59,11 @@ class Parser < Racc::Parser
         when (text = ss.scan(/\'[0-9]+-[0-9]+-[0-9]+\'/i))
            @rex_tokens.push action { [:date_string, Date.parse(text)] }
 
-        when (text = ss.scan(/\"[^"]*\"/i))
-           @rex_tokens.push action { [:character_string_literal, text[1..-2]] }
+        when (text = ss.scan(/\'/i))
+           @rex_tokens.push action { state = :STRS;  [:quote, text] }
 
-        when (text = ss.scan(/\'[^']*\'/i))
-           @rex_tokens.push action { [:character_string_literal, text[1..-2]] }
+        when (text = ss.scan(/\"/i))
+           @rex_tokens.push action { state = :STRD;  [:quote, text] }
 
         when (text = ss.scan(/[0-9]+/i))
            @rex_tokens.push action { [:unsigned_integer, text.to_i] }
@@ -220,6 +220,32 @@ class Parser < Racc::Parser
 
         when (text = ss.scan(/require/i))
           ;
+
+        else
+          text = ss.string[ss.pos .. -1]
+          raise  ScanError, "can not match: '" + text + "'"
+        end  # if
+
+      when :STRS
+        case
+        when (text = ss.scan(/\'/i))
+           @rex_tokens.push action { state = nil;    [:quote, text] }
+
+        when (text = ss.scan(/.*(?=\')/i))
+           @rex_tokens.push action {                 [:character_string_literal, text.gsub("''", "'")] }
+
+        else
+          text = ss.string[ss.pos .. -1]
+          raise  ScanError, "can not match: '" + text + "'"
+        end  # if
+
+      when :STRD
+        case
+        when (text = ss.scan(/\"/i))
+           @rex_tokens.push action { state = nil;    [:quote, text] }
+
+        when (text = ss.scan(/.*(?=\")/i))
+           @rex_tokens.push action {                 [:character_string_literal, text.gsub('""', '"')] }
 
         else
           text = ss.string[ss.pos .. -1]

@@ -286,10 +286,7 @@ module SQL
     end
 
     def quote(str)
-      str
-
-      # # FIXME
-      # str.gsub("'", "\\\'")
+      str.gsub(/'/, "''")
     end
 
     def arithmetic(operator, o)
