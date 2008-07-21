@@ -223,8 +223,7 @@ rule
     | factor
 
   factor
-    : plus_sign value_expression_primary { result = SQL::Statement::UnaryPlus.new(val[1]) }
-    | minus_sign value_expression_primary { result = SQL::Statement::UnaryMinus.new(val[1]) }
+    : sign value_expression_primary { result = val[0].new(val[1]) }
     | value_expression_primary
 
   value_expression_primary
@@ -262,6 +261,34 @@ rule
     | MIN left_paren value_expression right_paren { result = SQL::Statement::Minimum.new(val[2]) }
     | SUM left_paren value_expression right_paren { result = SQL::Statement::Sum.new(val[2]) }
 
+# literal numbers, strings, dates and times
+  unsigned_numeric_literal
+    : exact_numeric_literal
+    | approximate_numeric_literal
+
+  exact_numeric_literal
+    : unsigned_integer period unsigned_integer { result = SQL::Statement::Float.new("#{val[0]}.#{val[2]}".to_f) }
+    | unsigned_integer period { result = SQL::Statement::Float.new(val[0]) }
+    | period unsigned_integer { result = SQL::Statement::Float.new("0.#{val[1]}".to_f) }
+    | unsigned_integer { result = SQL::Statement::Integer.new(val[0]) }
+
+  approximate_numeric_literal
+    : mantissa E exponent { result = SQL::Statement::ApproximateFloat.new(val[0], val[2]) }
+
+  mantissa
+    : exact_numeric_literal
+
+  exponent
+    : signed_integer
+
+  signed_integer
+    : sign unsigned_integer { result = val[0].new(SQL::Statement::Integer.new(val[1])) }
+    | unsigned_integer { result = SQL::Statement::Integer.new(val[0]) }
+
+  sign
+    : plus_sign { result = SQL::Statement::UnaryPlus }
+    | minus_sign { result = SQL::Statement::UnaryMinus }
+
 # sql module
   column_name
     : identifier { result = SQL::Statement::Column.new(val[0]) }
@@ -277,15 +304,6 @@ rule
 
   date_literal
     : DATE date_string { result = SQL::Statement::Date.new(val[1]) }
-
-  unsigned_numeric_literal
-    : exact_numeric_literal
-
-  exact_numeric_literal
-    : unsigned_integer period unsigned_integer { result = SQL::Statement::Float.new("#{val[0]}.#{val[2]}".to_f) }
-    | unsigned_integer period { result = SQL::Statement::Float.new(val[0]) }
-    | period unsigned_integer { result = SQL::Statement::Float.new("0.#{val[1]}".to_f) }
-    | unsigned_integer { result = SQL::Statement::Integer.new(val[0]) }
 
 ---- header ----
 require File.dirname(__FILE__) + '/parser.rex.rb'

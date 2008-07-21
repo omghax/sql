@@ -247,6 +247,10 @@ class TestStatement < Test::Unit::TestCase
     # assert_sql "'O\\\'rly'", str("O'rly")
   end
 
+  def test_approximate_float
+    assert_sql '1E1', SQL::Statement::ApproximateFloat.new(int(1), int(1))
+  end
+
   def test_float
     assert_sql '1.1', SQL::Statement::Float.new(1.1)
   end

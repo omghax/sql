@@ -176,6 +176,9 @@ class Parser < Racc::Parser
         when (text = ss.scan(/CURRENT_USER/i))
            @rex_tokens.push action { [:CURRENT_USER, text] }
 
+        when (text = ss.scan(/E/i))
+           @rex_tokens.push action { [:E, text] }
+
         when (text = ss.scan(/<>/i))
            @rex_tokens.push action { [:not_equals_operator, text] }
 

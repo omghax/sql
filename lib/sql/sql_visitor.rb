@@ -287,6 +287,10 @@ module SQL
       "'%s'" % escape(o.value)
     end
 
+    def visit_ApproximateFloat(o)
+      "#{visit(o.mantissa)}E#{visit(o.exponent)}"
+    end
+
     def visit_Float(o)
       o.value.to_s
     end

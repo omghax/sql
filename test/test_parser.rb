@@ -281,6 +281,32 @@ class TestParser < Test::Unit::TestCase
     assert_understands "SELECT 'abc'"
   end
 
+  def test_approximate_numeric_literal
+    assert_understands 'SELECT 1E1'
+    assert_understands 'SELECT 1E+1'
+    assert_understands 'SELECT 1E-1'
+
+    assert_understands 'SELECT +1E1'
+    assert_understands 'SELECT +1E+1'
+    assert_understands 'SELECT +1E-1'
+
+    assert_understands 'SELECT -1E1'
+    assert_understands 'SELECT -1E+1'
+    assert_understands 'SELECT -1E-1'
+
+    assert_understands 'SELECT 1.5E30'
+    assert_understands 'SELECT 1.5E+30'
+    assert_understands 'SELECT 1.5E-30'
+
+    assert_understands 'SELECT +1.5E30'
+    assert_understands 'SELECT +1.5E+30'
+    assert_understands 'SELECT +1.5E-30'
+
+    assert_understands 'SELECT -1.5E30'
+    assert_understands 'SELECT -1.5E+30'
+    assert_understands 'SELECT -1.5E-30'
+  end
+
   def test_signed_float
     # Positives
     assert_sql 'SELECT +1', 'SELECT +1.'

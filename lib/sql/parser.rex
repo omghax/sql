@@ -73,6 +73,8 @@ rule
             CURRENT_USER  { [:CURRENT_USER, text] }
 
 # tokens
+            E             { [:E, text] }
+
             <>            { [:not_equals_operator, text] }
             !=            { [:not_equals_operator, text] }
             =             { [:equals_operator, text] }

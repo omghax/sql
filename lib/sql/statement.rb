@@ -411,6 +411,16 @@ module SQL
     class String < Literal
     end
 
+    class ApproximateFloat < Node
+      def initialize(mantissa, exponent)
+        @mantissa = mantissa
+        @exponent = exponent
+      end
+
+      attr_reader :mantissa
+      attr_reader :exponent
+    end
+
     class Float < Literal
     end
 
