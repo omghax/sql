@@ -382,6 +382,9 @@ module SQL
     class UnaryMinus < Unary
     end
 
+    class CurrentUser < Node
+    end
+
     class True < Node
     end
 

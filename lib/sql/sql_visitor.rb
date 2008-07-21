@@ -271,6 +271,10 @@ module SQL
       'NULL'
     end
 
+    def visit_CurrentUser(o)
+      'CURRENT_USER'
+    end
+
     def visit_DateTime(o)
       "'%s'" % escape(o.value.strftime('%Y-%m-%d %H:%M:%S'))
     end

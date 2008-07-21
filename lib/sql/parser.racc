@@ -228,14 +228,21 @@ rule
     | value_expression_primary
 
   value_expression_primary
-    : unsigned_literal
+    : unsigned_value_specification
     | column_reference
     | set_function_specification
     | left_paren value_expression right_paren { result = val[1] }
 
+  unsigned_value_specification
+    : unsigned_literal
+    | general_value_specification
+
   unsigned_literal
     : unsigned_numeric_literal
     | general_literal
+
+  general_value_specification
+    : CURRENT_USER { result = SQL::Statement::CurrentUser.new }
 
   column_reference
     : qualifier period column_name { result = SQL::Statement::QualifiedColumn.new(val[0], val[2]) }
