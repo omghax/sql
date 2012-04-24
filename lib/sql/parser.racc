@@ -77,8 +77,8 @@ rule
     | qualified_join
 
   cross_join
-    : table_reference comma table_name { result = SQL::Statement::CrossJoin.new(val[0], val[2]) }
-    | table_reference CROSS JOIN table_name { result = SQL::Statement::CrossJoin.new(val[0], val[3]) }
+    : table_reference comma table_reference { result = SQL::Statement::CrossJoin.new(val[0], val[2]) }
+    | table_reference CROSS JOIN table_reference { result = SQL::Statement::CrossJoin.new(val[0], val[3]) }
 
   qualified_join
     : table_reference join_type JOIN table_reference join_specification { result = val[1].new(val[0], val[3], val[4]) }
