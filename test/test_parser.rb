@@ -36,6 +36,9 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` FULL OUTER JOIN `t2` ON `t1`.`a` = `t2`.`a` FULL OUTER JOIN `t3` ON `t2`.`a` = `t3`.`a`'
     assert_understands 'SELECT * FROM `t1` FULL OUTER JOIN `t2` USING (`a`)'
     assert_understands 'SELECT * FROM `t1` FULL OUTER JOIN `t2` USING (`a`) FULL OUTER JOIN `t3` USING (`b`)'
+
+    assert_understands 'SELECT * FROM `t1` AS `x` FULL OUTER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`'
+    assert_sql 'SELECT * FROM `t1` AS `x` FULL OUTER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`', 'SELECT * FROM `t1` `x` FULL OUTER JOIN `t2` `y` ON `x`.`a` = `y`.`a`'
   end
 
   def test_full_join
@@ -43,6 +46,9 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` FULL JOIN `t2` ON `t1`.`a` = `t2`.`a` FULL JOIN `t3` ON `t2`.`a` = `t3`.`a`'
     assert_understands 'SELECT * FROM `t1` FULL JOIN `t2` USING (`a`)'
     assert_understands 'SELECT * FROM `t1` FULL JOIN `t2` USING (`a`) FULL JOIN `t3` USING (`b`)'
+
+    assert_understands 'SELECT * FROM `t1` AS `x` FULL JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`'
+    assert_sql 'SELECT * FROM `t1` AS `x` FULL JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`', 'SELECT * FROM `t1` `x` FULL JOIN `t2` `y` ON `x`.`a` = `y`.`a`'
   end
 
   def test_right_outer_join
@@ -50,6 +56,9 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` RIGHT OUTER JOIN `t2` ON `t1`.`a` = `t2`.`a` RIGHT OUTER JOIN `t3` ON `t2`.`a` = `t3`.`a`'
     assert_understands 'SELECT * FROM `t1` RIGHT OUTER JOIN `t2` USING (`a`)'
     assert_understands 'SELECT * FROM `t1` RIGHT OUTER JOIN `t2` USING (`a`) RIGHT OUTER JOIN `t3` USING (`b`)'
+
+    assert_understands 'SELECT * FROM `t1` AS `x` RIGHT OUTER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`'
+    assert_sql 'SELECT * FROM `t1` AS `x` RIGHT OUTER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`', 'SELECT * FROM `t1` `x` RIGHT OUTER JOIN `t2` `y` ON `x`.`a` = `y`.`a`'
   end
 
   def test_right_join
@@ -57,6 +66,9 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` RIGHT JOIN `t2` ON `t1`.`a` = `t2`.`a` RIGHT JOIN `t3` ON `t2`.`a` = `t3`.`a`'
     assert_understands 'SELECT * FROM `t1` RIGHT JOIN `t2` USING (`a`)'
     assert_understands 'SELECT * FROM `t1` RIGHT JOIN `t2` USING (`a`) RIGHT JOIN `t3` USING (`b`)'
+
+    assert_understands 'SELECT * FROM `t1` AS `x` RIGHT JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`'
+    assert_sql 'SELECT * FROM `t1` AS `x` RIGHT JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`', 'SELECT * FROM `t1` `x` RIGHT JOIN `t2` `y` ON `x`.`a` = `y`.`a`'
   end
 
   def test_left_outer_join
@@ -64,6 +76,9 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` LEFT OUTER JOIN `t2` ON `t1`.`a` = `t2`.`a` LEFT OUTER JOIN `t3` ON `t2`.`a` = `t3`.`a`'
     assert_understands 'SELECT * FROM `t1` LEFT OUTER JOIN `t2` USING (`a`)'
     assert_understands 'SELECT * FROM `t1` LEFT OUTER JOIN `t2` USING (`a`) LEFT OUTER JOIN `t3` USING (`b`)'
+
+    assert_understands 'SELECT * FROM `t1` AS `x` LEFT OUTER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`'
+    assert_sql 'SELECT * FROM `t1` AS `x` LEFT OUTER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`', 'SELECT * FROM `t1` `x` LEFT OUTER JOIN `t2` `y` ON `x`.`a` = `y`.`a`'
   end
 
   def test_left_join
@@ -71,6 +86,9 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` LEFT JOIN `t2` ON `t1`.`a` = `t2`.`a` LEFT JOIN `t3` ON `t2`.`a` = `t3`.`a`'
     assert_understands 'SELECT * FROM `t1` LEFT JOIN `t2` USING (`a`)'
     assert_understands 'SELECT * FROM `t1` LEFT JOIN `t2` USING (`a`) LEFT JOIN `t3` USING (`b`)'
+
+    assert_understands 'SELECT * FROM `t1` AS `x` LEFT JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`'
+    assert_sql 'SELECT * FROM `t1` AS `x` LEFT JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`', 'SELECT * FROM `t1` `x` LEFT JOIN `t2` `y` ON `x`.`a` = `y`.`a`'
   end
 
   def test_inner_join
@@ -78,6 +96,9 @@ class TestParser < Test::Unit::TestCase
     assert_understands 'SELECT * FROM `t1` INNER JOIN `t2` ON `t1`.`a` = `t2`.`a` INNER JOIN `t3` ON `t2`.`a` = `t3`.`a`'
     assert_understands 'SELECT * FROM `t1` INNER JOIN `t2` USING (`a`)'
     assert_understands 'SELECT * FROM `t1` INNER JOIN `t2` USING (`a`) INNER JOIN `t3` USING (`b`)'
+
+    assert_understands 'SELECT * FROM `t1` AS `x` INNER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`'
+    assert_sql 'SELECT * FROM `t1` AS `x` INNER JOIN `t2` AS `y` ON `x`.`a` = `y`.`a`', 'SELECT * FROM `t1` `x` INNER JOIN `t2` `y` ON `x`.`a` = `y`.`a`'
   end
 
   def test_cross_join
