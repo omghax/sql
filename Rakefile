@@ -4,8 +4,10 @@ require 'rubygems'
 require 'hoe'
 require './lib/sql/version.rb'
 
-Hoe.new('sql', SQL::VERSION::STRING) do |p|
+Hoe.spec('sql') do |p|
   p.developer 'Dray Lacy', 'dray@izea.com'
+  p.version = SQL::VERSION::STRING
+  p.license("MIT")
 end
 
 GENERATED_PARSER = 'lib/sql/parser.racc.rb'
