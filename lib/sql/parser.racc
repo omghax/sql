@@ -84,7 +84,8 @@ rule
     : table_reference join_type JOIN table_reference join_specification { result = val[1].new(val[0], val[3], val[4]) }
 
   join_type
-    : INNER { result = SQL::Statement::InnerJoin }
+    :  { result = SQL::Statement::InnerJoin }
+    | INNER { result = SQL::Statement::InnerJoin }
     | LEFT OUTER { result = SQL::Statement::LeftOuterJoin }
     | LEFT { result = SQL::Statement::LeftJoin }
     | RIGHT OUTER { result = SQL::Statement::RightOuterJoin }
