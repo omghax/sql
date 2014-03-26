@@ -1,4 +1,6 @@
-require File.dirname(__FILE__) + '/../lib/sql'
+require File.dirname(File.expand_path(__FILE__)) + '/../lib/sql'
+
+gem 'minitest', "4.7.5"
 require 'test/unit'
 
 class TestStatement < Test::Unit::TestCase

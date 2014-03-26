@@ -1,5 +1,5 @@
 source "https://rubygems.org"
 
-gem "hoe"
 gem "racc"
 gem "rex"
+gem "minitest", "4.7.5"

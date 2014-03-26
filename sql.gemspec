@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 require File.expand_path('../lib/sql/version', __FILE__)
 
 Gem::Specification.new do |gem|
@@ -13,6 +12,6 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.name          = "sql"
   gem.require_paths = ["lib"]
-  gem.version       = '0.0.1'
+  gem.version       = SQL::Version::STRING
 end
 
