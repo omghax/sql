@@ -75,7 +75,7 @@ building these trees.
     => "SELECT * FROM users WHERE id = 1"
 ```
 
-== ROADMAP
+## ROADMAP
 
 These features aren't currently implemented, but I have plans to add them in
 the future. Stay tuned.
@@ -110,15 +110,9 @@ structure for you, based on an input string of SQL.
   => "1"
 ```
 
-## REQUIREMENTS:
-
-* Ruby (duh)
-* RubyGems
-* Hoe >= 1.6.0
-
 ## INSTALL:
 
-    $ sudo gem install omghax-sql --source http://gems.github.com
+    $ gem install sql
 
 ## LICENSE:
 
