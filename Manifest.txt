@@ -1,6 +1,0 @@
-History.txt
-Manifest.txt
-README.txt
-Rakefile
-lib/sql.rb
-test/test_sql.rb
