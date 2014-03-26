@@ -1,0 +1,16 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    hoe (3.10.0)
+      rake (>= 0.8, < 11.0)
+    racc (1.4.11)
+    rake (10.2.1)
+    rex (1.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  hoe
+  racc
+  rex

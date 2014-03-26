@@ -4,8 +4,10 @@ require 'rubygems'
 require 'hoe'
 require './lib/sql/version.rb'
 
-Hoe.new('sql', SQL::VERSION::STRING) do |p|
+Hoe.spec('sql') do |p|
   p.developer 'Dray Lacy', 'dray@izea.com'
+  p.version = SQL::VERSION::STRING
+  p.license("MIT")
 end
 
 GENERATED_PARSER = 'lib/sql/parser.racc.rb'
@@ -19,6 +21,7 @@ file GENERATED_PARSER => 'lib/sql/parser.racc' do |t|
   sh "racc -o #{t.name} #{t.prerequisites.first}"
 end
 
+desc "Generate parser files"
 task :parser => [GENERATED_LEXER, GENERATED_PARSER]
 
 # Make sure the parser's up-to-date when we test.
